@@ -106,7 +106,7 @@ main(void)
     * concerned and the previous pkey_set() overrides it.
     */
    //status = _pkey_mprotect(buffer, getpagesize(),
-                          PROT_READ | PROT_WRITE, pkey);
+   //                       PROT_READ | PROT_WRITE, pkey);
    //if (status == -1)
    //    errExit("pkey_mprotect");
 
