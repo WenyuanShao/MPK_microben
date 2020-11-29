@@ -32,7 +32,7 @@ test_rdpkru(void)
   return eax;
 }
 
-/*int
+int
 pkey_set(int pkey, unsigned long rights, unsigned long flags)
 {
   unsigned int pkru = (rights << (2 * pkey));
@@ -57,7 +57,7 @@ pkey_free(unsigned long pkey)
 {
    return syscall(SYS_pkey_free, pkey);
 }
-*/
+
 #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
                           } while (0)
 
@@ -106,7 +106,7 @@ main(void)
     * concerned and the previous pkey_set() overrides it.
     */
    status = pkey_mprotect(buffer, getpagesize(),
-     //                     PROT_READ | PROT_WRITE, pkey);
+                          PROT_READ | PROT_WRITE, pkey);
    if (status == -1)
        errExit("pkey_mprotect");
 
