@@ -23,7 +23,7 @@ test_rdpkru(void)
   unsigned int ecx = 0;
   unsigned int edx = 0;
 
-  __asm__ __volatile__("movl %%ecx, $0\n\t"
+  __asm__ __volatile__("xor %%ecx, %%ecx\n\t"
                        "rdpkru"
                        : "=a" (eax), "=d" (edx)
                        :
