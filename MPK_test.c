@@ -96,7 +96,7 @@ main(void)
     * Disable access to any memory with "pkey" set,
     * even though there is none right now
     */
-   _pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
+   //_pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
    //if (status)
    //    errExit("pkey_set");
 
@@ -105,10 +105,10 @@ main(void)
     * Note that it is still read/write as far as mprotect() is
     * concerned and the previous pkey_set() overrides it.
     */
-   status = _pkey_mprotect(buffer, getpagesize(),
+   //status = _pkey_mprotect(buffer, getpagesize(),
                           PROT_READ | PROT_WRITE, pkey);
-   if (status == -1)
-       errExit("pkey_mprotect");
+   //if (status == -1)
+   //    errExit("pkey_mprotect");
 
    printf("about to read buffer again...\n");
 
