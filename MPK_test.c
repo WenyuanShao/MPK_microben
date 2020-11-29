@@ -3,6 +3,7 @@
 #include <sys/syscall.h>
 #include <stdio.h>
 #include <sys/mman.h>
+#include <stdlib.h>
 
 static inline void
 wrpkru(unsigned int pkru)
