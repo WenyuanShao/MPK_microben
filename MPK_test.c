@@ -32,28 +32,28 @@ test_rdpkru(void)
   return eax;
 }
 
-int
-pkey_set(int pkey, unsigned long rights, unsigned long flags)
+void
+_pkey_set(int pkey, unsigned long rights, unsigned long flags)
 {
   unsigned int pkru = (rights << (2 * pkey));
-  return wrpkru(pkru);
+  wrpkru(pkru);
 }
 
 int
-pkey_mprotect(void *ptr, size_t size, unsigned long orig_prot,
+_pkey_mprotect(void *ptr, size_t size, unsigned long orig_prot,
             unsigned long pkey)
 {
   return syscall(SYS_pkey_mprotect, ptr, size, orig_prot, pkey);
 }
  
 int
-pkey_alloc(void)
+_pkey_alloc(void)
 {
     return syscall(SYS_pkey_alloc, 0, 0);
 }
 
 int
-pkey_free(unsigned long pkey)
+_pkey_free(unsigned long pkey)
 {
    return syscall(SYS_pkey_free, pkey);
 }
@@ -87,7 +87,7 @@ main(void)
     */
   //unsigned int test = test_rdpkru();
   //printf("test: %d\n", test);
-  pkey = pkey_alloc();
+  pkey = _pkey_alloc();
   printf("pkey: %d\n", pkey);
    if (pkey == -1)
        errExit("pkey_alloc");
@@ -96,16 +96,16 @@ main(void)
     * Disable access to any memory with "pkey" set,
     * even though there is none right now
     */
-   status = pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
-   if (status)
-       errExit("pkey_set");
+   _pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
+   //if (status)
+   //    errExit("pkey_set");
 
    /*
     * Set the protection key on "buffer".
     * Note that it is still read/write as far as mprotect() is
     * concerned and the previous pkey_set() overrides it.
     */
-   status = pkey_mprotect(buffer, getpagesize(),
+   status = _pkey_mprotect(buffer, getpagesize(),
                           PROT_READ | PROT_WRITE, pkey);
    if (status == -1)
        errExit("pkey_mprotect");
@@ -117,7 +117,7 @@ main(void)
     */
    printf("buffer contains: %d\n", *buffer);
 
-   status = pkey_free(pkey);
+   status = _pkey_free(pkey);
    if (status == -1)
        errExit("pkey_free");
 
