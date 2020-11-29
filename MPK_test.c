@@ -85,41 +85,42 @@ main(void)
    /*
     * Allocate a protection key:
     */
-  unsigned int test = test_rdpkru();
-  printf("test: %d\n", test);
-  //pkey = pkey_alloc();
-  // if (pkey == -1)
-  //     errExit("pkey_alloc");
+  //unsigned int test = test_rdpkru();
+  //printf("test: %d\n", test);
+  pkey = pkey_alloc();
+  printf("pkey: %d\n", pkey);
+   if (pkey == -1)
+       errExit("pkey_alloc");
 
    /*
     * Disable access to any memory with "pkey" set,
     * even though there is none right now
     */
-   //status = pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
-   //if (status)
-    //   errExit("pkey_set");
+   status = pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
+   if (status)
+       errExit("pkey_set");
 
    /*
     * Set the protection key on "buffer".
     * Note that it is still read/write as far as mprotect() is
     * concerned and the previous pkey_set() overrides it.
     */
-   //status = pkey_mprotect(buffer, getpagesize(),
+   status = pkey_mprotect(buffer, getpagesize(),
      //                     PROT_READ | PROT_WRITE, pkey);
-   //if (status == -1)
-    //   errExit("pkey_mprotect");
+   if (status == -1)
+       errExit("pkey_mprotect");
 
-   //printf("about to read buffer again...\n");
+   printf("about to read buffer again...\n");
 
    /*
     * This will crash, because we have disallowed access
     */
-   //printf("buffer contains: %d\n", *buffer);
+   printf("buffer contains: %d\n", *buffer);
 
-   //status = pkey_free(pkey);
-   //if (status == -1)
-     //  errExit("pkey_free");
+   status = pkey_free(pkey);
+   if (status == -1)
+       errExit("pkey_free");
 
-   //exit(EXIT_SUCCESS);
+   exit(EXIT_SUCCESS);
     return 0;
 }
