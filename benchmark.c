@@ -41,6 +41,7 @@ main(void)
 
 	pkey = _pkey_alloc();
 	assert(pkey > 0);
+	printf("pkey: %d\n", pkey);
 	pkru = (PKEY_DISABLE_ACCESS << (2 * pkey));
 
 	s = mpk_tsc();
@@ -53,9 +54,8 @@ main(void)
 
 	rd_pkru = test_rdpkru();
 	printf("rdpkru: 0x%x, wrpkru: 0x%x\n", rd_pkru, pkru);
-	/*_pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
 
-	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, pkey);
+	/*status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, pkey);
 
 	printf("about to read buffer again...\n");
 

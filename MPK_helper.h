@@ -26,7 +26,7 @@ wrpkru(unsigned int pkru)
                 : : "a" (eax), "c" (ecx), "d" (edx));
 }
 
-static inline unsigned int
+static inline void
 test_wrpkru(unsigned int a)
 {
 	__asm__ __volatile__("xor %%ecx, %%ecx\n\t"
