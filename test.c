@@ -19,17 +19,16 @@ wrpkru(unsigned int pkru)
 static inline unsigned int
 test_rdpkru(void)
 {
-  unsigned int eax = 0;
-  unsigned int ecx = 0;
-  unsigned int edx = 0;
+  unsigned int a = 0;
+  unsigned int d = 0;
 
   __asm__ __volatile__("xor %%ecx, %%ecx\n\t"
                        "rdpkru"
-                       : "=a" (eax), "=d" (edx)
+                       : "=a" (a), "=d" (d)
                        :
                        :);
 
-  return eax;
+  return a;
 }
 
 void
