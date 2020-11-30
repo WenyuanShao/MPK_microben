@@ -38,7 +38,7 @@ main(void)
 		_pkey_free(pkey);
 	}
 	r /= TEST_LEN;
-	printf("pkey alloc cost: %llu cycles\n");
+	printf("pkey alloc cost: %llu cycles\n", r);
 
 	pkey = _pkey_alloc();
 	assert(pkey > 0);
@@ -50,7 +50,7 @@ main(void)
 	}
     e = mpk_tsc();
 	r = (e-s)/TEST_LEN;
-	printf("wrpkru cost: %llu cycles\n");
+	printf("wrpkru cost: %llu cycles\n", r);
 
 	rd_pkru = test_rdpkru();
 	printf("rdpkru: 0x%x, wrpkru: 0x%x\n", rd_pkru, pkru);
