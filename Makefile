@@ -9,7 +9,7 @@ TARGETS=$(CFILES:%.c=%)
 all: $(TARGETS)
 
 $(TARGETs): %: %.o
-	$(CC) $(LIBS) -o $@ $<
+	$(CC) $(INCLUDE) $(LIBS) -o $@ $<
 
 $(OBJS): %.o: %.c
 	$(CC) -c $(CFLAGS) -o $@ $<

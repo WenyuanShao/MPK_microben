@@ -11,7 +11,6 @@
 int
 main(void)
 {
-	int                status;
 	int                pkey;
 	unsigned int       pkru;
 	int                i = 0;
