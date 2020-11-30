@@ -6,7 +6,8 @@
 #include <assert.h>
 #include "MPK_helper.h"
 
-int main(void)
+int
+main(void)
 {
 	int          status;
 	int          pkey;

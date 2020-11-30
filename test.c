@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include <sys/mman.h>
 #include <stdlib.h>
+#include "MPK_helper.h"
 
-static inline void
+/*static inline void
 wrpkru(unsigned int pkru)
 {
   unsigned int eax = pkru;
@@ -59,7 +60,7 @@ _pkey_free(unsigned long pkey)
 
 #define errExit(msg)    do { perror(msg); exit(EXIT_FAILURE); \
                           } while (0)
-
+*/
 int
 main(void)
 {
