@@ -4,6 +4,7 @@
 #include <sys/mman.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "MPK_helper.h"
 
 #define TEST_LEN 1000
 
@@ -38,7 +39,7 @@ main(void)
 	 * Disable access to any memory with "pkey" set,
 	 * even though there is none right now
 	 */
-	_pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
+	_pkey_set(pkey, PKEY_DISABLE_WRITE, 0);
 	//pkru = (PKEY_DISABLE_ACCESS << (2 * pkey));
 
 	e = mpk_tsc();
