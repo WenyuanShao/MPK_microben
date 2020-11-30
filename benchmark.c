@@ -1,9 +1,5 @@
-#include <unistd.h>
-#include <sys/syscall.h>
-#include <stdio.h>
-#include <sys/mman.h>
-#include <stdlib.h>
 #include "MPK_helper.h"
+#include <assert.h>
 
 #define TEST_LEN 1000
 
@@ -12,14 +8,13 @@ main(void)
 {
 	int                status;
 	int                pkey;
-	unsigned int       rdkey;
 	unsigned int       pkru;
 	int                i = 0;
 	unsigned long long s, e, r;
 
 	s = mpk_tsc();
 	for (i = 0; i < TEST_LEN; i++) {
-		rdkey= test_rdpkru();
+		test_rdpkru();
 	}
 	e = mpk_tsc();
 	r = (e-s)/TEST_LEN;
@@ -40,8 +35,8 @@ main(void)
 	 * Disable access to any memory with "pkey" set,
 	 * even though there is none right now
 	 */
-	//_pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
-	pkru = (PKEY_DISABLE_ACCESS << (2 * pkey));
+	_pkey_set(pkey, PKEY_DISABLE_ACCESS, 0);
+	//pkru = (PKEY_DISABLE_ACCESS << (2 * pkey));
 
 	e = mpk_tsc();
 	for (i = 0; i < TEST_LEN; i++) {
