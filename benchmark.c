@@ -45,7 +45,7 @@ main(void)
 
 	s = mpk_tsc();
 	for (i = 0; i < TEST_LEN; i++) {
-		wrpkru(pkru);
+		test_wrpkru(pkru);
 	}
     e = mpk_tsc();
 	r = (e-s)/TEST_LEN;
