@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O3 -g
+CFLAGS=-Wall -g
 INCLUDE=-I .
 LIBS=
 CFILES=$(wildcard ./*.c)

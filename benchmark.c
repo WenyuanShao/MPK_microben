@@ -4,7 +4,6 @@
 #include <sys/mman.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "MPK_helper.h"
 
 #define TEST_LEN 1000
 
