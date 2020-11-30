@@ -32,7 +32,7 @@ test_rdpkru(void)
 	return eax;
 }
 
-void
+/*void
 _pkey_set(int pkey, unsigned long rights, unsigned long flags)
 {
 	unsigned int pkru = (rights << (2 * pkey));
@@ -56,7 +56,7 @@ int
 _pkey_free(unsigned long pkey)
 {
 	return syscall(SYS_pkey_free, pkey);
-}
+}*/
 
 #define errExit(msg) do { perror(msg); exit(EXIT_FAILURE); \
                         } while (0)
@@ -84,13 +84,13 @@ main(void)
 	 */
 	rdkey= test_rdpkru();
 	printf("rdpkru: %u\n", rdkey);
-	pkey = _pkey_alloc();
+/*	pkey = _pkey_alloc();
 	printf("pkey: %d\n", pkey);
 	rdkey= test_rdpkru();
 	printf("rdpkru: %u\n", rdkey);
 	if (pkey == -1)
 		errExit("pkey_alloc");
-
+*/
 	/*
 	 * Disable access to any memory with "pkey" set,
 	 * even though there is none right now
@@ -115,10 +115,10 @@ main(void)
 	 */
 	printf("buffer contains: %d\n", *buffer);
 
-	status = _pkey_free(pkey);
+/*	status = _pkey_free(pkey);
 	if (status == -1)
 		errExit("pkey_free");
-
+*/
 	exit(EXIT_SUCCESS);
 	return 0;
 }
