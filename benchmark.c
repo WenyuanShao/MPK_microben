@@ -6,7 +6,6 @@
 int
 main(void)
 {
-	int status;
 	int pkey;
 	int *buffer;
 	unsigned long long e, s, r;
