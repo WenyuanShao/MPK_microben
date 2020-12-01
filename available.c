@@ -14,8 +14,6 @@ main(void)
 	*buffer = __LINE__;
 	printf("buffer contains: %d\n", *buffer);
 
-	unsigned int test = test_rdpkru();
-	printf("test: %d\n", test);
 	pkey = _pkey_alloc();
 	printf("pkey: %d\n", pkey);
 	if (pkey == -1)
@@ -25,8 +23,8 @@ main(void)
 
 	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, pkey);
 
-	printf("about to read buffer again...\n");
-
+	printf("read buffer again...\n");
+	/* fail to read buffer again */
 	printf("buffer contains: %d\n", *buffer);
 
 	status = _pkey_free(pkey);

@@ -26,6 +26,7 @@ main(void)
 	}
 	e = mpk_tsc();
 	r = (e-s)/TEST_LEN;
+	// 24 cycles
 	printf("rdpkru cost: %llu cycles\n", r);
 
 	r = (unsigned long long)0;
@@ -38,6 +39,7 @@ main(void)
 		_pkey_free(pkey);
 	}
 	r /= TEST_LEN;
+	// 3043 cycles 
 	printf("pkey alloc cost: %llu cycles\n", r);
 
 	pkey = _pkey_alloc();
@@ -51,6 +53,7 @@ main(void)
 	}
     e = mpk_tsc();
 	r = (e-s)/TEST_LEN;
+	// 26 cycles
 	printf("wrpkru cost: %llu cycles\n", r);
 
 	rd_pkru = test_rdpkru();
@@ -62,11 +65,8 @@ main(void)
 	}
 	e = mpk_tsc();
 	r = (e-s)/TEST_LEN;
+	// 3232 cycles
 	printf("pkey_mprotect cost: %llu\n", r);
-
-	printf("about to read buffer again...\n");
-
-	printf("buffer contains: %d\n", *buffer);
 
 	status = _pkey_free(pkey);
 	if (status == -1)
