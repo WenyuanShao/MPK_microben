@@ -55,8 +55,14 @@ main(void)
 
 	rd_pkru = test_rdpkru();
 	printf("rdpkru: 0x%x, wrpkru: 0x%x\n", rd_pkru, pkru);
-
-	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, pkey);
+	
+	s = mpk_tsc();
+	for (i = 0; i < TEST_LEN; i++) {
+		status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, pkey);
+	}
+	e = mpk_tsc();
+	r = (e-s)/TEST_LEN;
+	printf("pkey_mprotect cost: %llu\n", r);
 
 	printf("about to read buffer again...\n");
 
