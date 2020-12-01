@@ -55,7 +55,7 @@ main(void)
 	rd_pkru = test_rdpkru();
 	printf("rdpkru: 0x%x, wrpkru: 0x%x\n", rd_pkru, pkru);
 
-	/*status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, pkey);
+	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, pkey);
 
 	printf("about to read buffer again...\n");
 
@@ -65,6 +65,6 @@ main(void)
 	if (status == -1)
 		errExit("pkey_free");
 
-	exit(EXIT_SUCCESS);*/
+	exit(EXIT_SUCCESS);
 	return 0;
 }
