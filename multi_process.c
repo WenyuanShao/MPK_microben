@@ -34,9 +34,12 @@ main(void)
 		//if (status == -1)
 		//	errExit("pkey_free");
 	} else {
-		while(1) {
+		pkey = _pkey_alloc();
+		printf("pkey: %d\n", pkey);
+		_pkey_set(pkey, 0, 0);
+		/*while(1) {
 			printf("buffer contains: %d\n", *buffer);
-		}	
+		}*/	
 	}
 	exit(EXIT_SUCCESS);
 	return 0;
