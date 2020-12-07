@@ -27,6 +27,7 @@ main(void)
 	printf("read buffer: %d\n", *buffer);
 
 	_pkey_set(ckey, 0, 0);
+	_pkey_set(skey, PKEY_DISABLE_ACCESS, 0);
 	//status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, skey);
 	printf("read buffer again: %d\n", *buffer);
 	//status = _pkey_free(pkey);
