@@ -48,7 +48,9 @@ callgate()
 
 int
 init(int *buffer) {
+	int status;
 	int key = _pkey_alloc();
+
 	assert(key >= 0);
 	buffer = mmap(NULL, getpagesize(), PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (buffer == MAP_FAILED)
@@ -58,6 +60,7 @@ init(int *buffer) {
 	_pkey_set(key, 0, 0);
 	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, key);
 	assert(status >= 0);
+
 	return key;
 }
 
@@ -97,7 +100,7 @@ main(void)
 	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, skey);
 	assert(status >= 0);
 	*/
-	client_call();
+	client_call(s_buffer);
 	//unsigned int rdpkru = test_rdpkru();
 	//printf("rdpkru after callgate: 0x%x\n", rdpkru);
 
