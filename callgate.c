@@ -34,7 +34,7 @@ callgate(void)
 						 "jne callgate_abuse\n\t"
 						 "wrpkru"
 						 :
-						 : "a" (pkru), [token] "r" (token)
+						 : "a" (pkru), [token] "rm" (token)
 						 :);
 }
 
