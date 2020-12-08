@@ -57,7 +57,7 @@ main(void)
 
 	_pkey_set(skey, 0, 0);
 	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, skey);
-	assert(status > 0);
+	//assert(status > 0);
 	printf("read buffer: %d\n", *buffer);
 	
 	callgate();
