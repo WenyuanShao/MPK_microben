@@ -17,7 +17,7 @@ callgate_abuse(void)
 }
 
 #define S_KEY 1
-#define c_KEY 2
+#define C_KEY 2
 
 static inline void
 callgate(void)
@@ -31,10 +31,10 @@ callgate(void)
 						 "xor %%rdx, %%rdx\n\t"
 						 "cmp %[token], %%r15\n\t"
 						 "jne callgate_abuse\n\t"
-						 "movl %[pkey], %%eax\n\t"
+						 "movl %[pkru], %%eax\n\t"
 						 "wrpkru"
 						 :
-						 : [token] "r" (token), [pkey] "r" (pkey)
+						 : [token] "r" (token), [pkru] "r" (pkru)
 						 :);
 }
 
