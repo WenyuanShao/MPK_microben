@@ -23,7 +23,7 @@ static inline void
 callgate(void)
 {
 	unsigned long long token = get_token();
-	unsigned int pkru = (0 << (2 * C_KEY));
+	unsigned long long pkru = (unsigned long long)(0 << (2 * C_KEY));
 	pkru = (PKEY_DISABLE_ACCESS << (2 * S_KEY));
 	printf("pkru: 0x%x\n", pkru);
 
