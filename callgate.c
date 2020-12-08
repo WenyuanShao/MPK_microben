@@ -11,7 +11,8 @@ get_token(void)
 static inline void
 callgate_abuse(void)
 {
-	printf("ERROR111\n");
+	printf("callgate_abuse\n");
+	assert(0);
 }
 
 static inline void
@@ -19,19 +20,17 @@ callgate(void)
 {
 	unsigned long long token = get_token();
 	unsigned int pkey = 2;
-	
-	//goto callgate_abuse;
 
 	__asm__ __volatile__("movq %[token], %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
 						 "cmp %[token], %%r15\n\t"
-						 "call callgate_abuse"
+						 "jne callgate_abuse\n\t"
+						 "movl %[pkey], %%eax\n\t"
+						 "wrpkru"
 						 :
-						 : [token] "r" (token)
+						 : [token] "r" (token), [pkey] "r" (pkey)
 						 :);
-//callgate_abuse:
-//	printf("ERROR\n");
 }
 
 int
