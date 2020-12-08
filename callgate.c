@@ -12,7 +12,6 @@ void
 callgate_abuse(void)
 {
 	printf("callgate_abuse\n");
-	assert(0);
 	return;
 }
 
