@@ -30,6 +30,10 @@ callgate()
 	pkru = (PKEY_DISABLE_ACCESS << (2 * C_KEY));
 	//printf("pkru: 0x%x\n", pkru);
 
+	/* 
+	 * Composite version should rely on stubs to save current state of
+	 * a thread. As a result, in this prototype, I don't consider it.
+	 */
 	__asm__ __volatile__("movq %[token], %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
@@ -81,34 +85,7 @@ main(void)
 	pkey[0] = init(s_buffer);
 	pkey[1] = init(c_buffer);
 
-	
-	//buffer = mmap(NULL, getpagesize(), PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-	//if (buffer == MAP_FAILED)
-	//	errExit("mmap");
-
-	//*buffer = __LINE__;
-	//printf("buffer contains: %d\n", *buffer);
-	
-	/*skey = _pkey_alloc();
-	assert(skey > 0);
-	ckey = _pkey_alloc();
-	assert(ckey > 0);
-	printf("pkey: %d\n", skey);
-	printf("pkey: %d\n", ckey);
-
-	_pkey_set(ckey, 0, 0);
-	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, skey);
-	assert(status >= 0);
-	*/
 	client_call(s_buffer);
-	//unsigned int rdpkru = test_rdpkru();
-	//printf("rdpkru after callgate: 0x%x\n", rdpkru);
 
-	//_pkey_set(skey, 0, 0);
-	//_pkey_set(ckey, PKEY_DISABLE_ACCESS, 0);
-	//rdpkru = test_rdpkru();
-	//printf("rdpkru after normal wrpkru: 0x%x\n", rdpkru);
-	//printf("read buffer: %d\n", *buffer);
-	exit(EXIT_SUCCESS);
 	return 0;
 }
