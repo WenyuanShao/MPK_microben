@@ -24,7 +24,7 @@ callgate(void)
 {
 	unsigned long long token = get_token();
 	unsigned pkru = (0 << (2 * C_KEY));
-	pkru = (PKEY_DISABLE_ACCESS << (2 * S_KEY))
+	pkru = (PKEY_DISABLE_ACCESS << (2 * S_KEY));
 
 	__asm__ __volatile__("movq %[token], %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
