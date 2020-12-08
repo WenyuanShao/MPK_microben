@@ -31,7 +31,7 @@ test_wrpkru(unsigned int a)
 {
 	__asm__ __volatile__("xor %%ecx, %%ecx\n\t"
                          "xor %%edx, %%edx\n\t"
-                         "rdpkru"
+                         "wrpkru"
                          :
                          : "a" (a)
                          :);

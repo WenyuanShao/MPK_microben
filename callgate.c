@@ -1,5 +1,30 @@
 #include "MPK_helper.h"
 #include <assert.h>
+#include <stdlib.h>
+
+static inline unsigned long long
+get_token(void)
+{
+	unsigned long long ret = ((unsigned long long)rand() << 32) | rand();
+}
+
+static inline void
+callgate(void)
+{
+	unsigned long long token = get_token();
+	unsigned int pkey = 2;
+	
+	__asm__ __volatile__("movl %[token], %%r15\n\t"
+						 "xor %%rcx, %%rcx\n\t"
+						 "xor %%rdx, %%rdx\n\t"
+						 "cmp %[token], %%r15\n\t"
+						 "jne callgate_abuse"
+						 :
+						 : [token] "r" (token)
+						 :);
+callgate_abuse:
+	printf("ERROR\n");
+}
 
 int
 main(void)
@@ -26,6 +51,8 @@ main(void)
 	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, skey);
 	assert(status > 0);
 	printf("read buffer: %d\n", *buffer);
+	
+	callgate();
 
 	_pkey_set(ckey, 0, 0);
 	_pkey_set(skey, PKEY_DISABLE_ACCESS, 0);
