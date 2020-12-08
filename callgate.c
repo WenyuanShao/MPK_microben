@@ -23,8 +23,9 @@ static inline void
 callgate(void)
 {
 	unsigned long long token = get_token();
-	unsigned pkru = (0 << (2 * C_KEY));
+	unsigned int pkru = (0 << (2 * C_KEY));
 	pkru = (PKEY_DISABLE_ACCESS << (2 * S_KEY));
+	printf("pkru: 0x%x\n", pkru);
 
 	__asm__ __volatile__("movq %[token], %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
@@ -65,6 +66,8 @@ main(void)
 	printf("read buffer: %d\n", *buffer);
 	
 	callgate();
+	unsigned int rdpkru = test_rdpkru();
+	printf("rdpkru: 0x%x\n", rdpkru);
 
 	//_pkey_set(ckey, 0, 0);
 	//_pkey_set(skey, PKEY_DISABLE_ACCESS, 0);
