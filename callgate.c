@@ -8,7 +8,7 @@ get_token(void)
 	unsigned long long ret = ((unsigned long long)rand() << 32) | rand();
 }
 
-static inline void
+void
 callgate_abuse(void)
 {
 	printf("callgate_abuse\n");
