@@ -20,18 +20,18 @@ callgate(void)
 	unsigned long long token = get_token();
 	unsigned int pkey = 2;
 	
-	goto callgate_abuse;
+	//goto callgate_abuse;
 
 	__asm__ __volatile__("movq %[token], %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
 						 "cmp %[token], %%r15\n\t"
-						 "jne callgate_abuse"
+						 "call callgate_abuse"
 						 :
 						 : [token] "r" (token)
 						 :);
-callgate_abuse:
-	printf("ERROR\n");
+//callgate_abuse:
+//	printf("ERROR\n");
 }
 
 int
