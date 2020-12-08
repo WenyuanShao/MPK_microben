@@ -67,12 +67,12 @@ main(void)
 	
 	callgate();
 	unsigned int rdpkru = test_rdpkru();
-	printf("rdpkru: 0x%x\n", rdpkru);
+	printf("rdpkru after callgate: 0x%x\n", rdpkru);
 
 	_pkey_set(ckey, 0, 0);
 	_pkey_set(skey, PKEY_DISABLE_ACCESS, 0);
 	rdpkru = test_rdpkru();
-	printf("rdpkru: 0x%x\n", rdpkru);
+	printf("rdpkru after normal wrpkru: 0x%x\n", rdpkru);
 	printf("read buffer again: %d\n", *buffer);
 	exit(EXIT_SUCCESS);
 	return 0;
