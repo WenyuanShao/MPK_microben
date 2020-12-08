@@ -32,7 +32,7 @@ callgate(void)
 						 "xor %%rdx, %%rdx\n\t"
 						 "cmp %[token], %%r15\n\t"
 						 "jne callgate_abuse\n\t"
-						 "movl %[pkru], %%eax\n\t"
+						 "movq %[pkru], %%rax\n\t"
 						 "wrpkru"
 						 :
 						 : [token] "r" (token), [pkru] "r" (pkru)
