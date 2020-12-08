@@ -71,7 +71,7 @@ main(void)
 
 	_pkey_set(ckey, 0, 0);
 	_pkey_set(skey, PKEY_DISABLE_ACCESS, 0);
-	unsigned int rdpkru = test_rdpkru();
+	rdpkru = test_rdpkru();
 	printf("rdpkru: 0x%x\n", rdpkru);
 	printf("read buffer again: %d\n", *buffer);
 	exit(EXIT_SUCCESS);
