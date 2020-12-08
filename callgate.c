@@ -9,6 +9,12 @@ get_token(void)
 }
 
 static inline void
+callgate_abuse(void)
+{
+	printf("ERROR111\n");
+}
+
+static inline void
 callgate(void)
 {
 	unsigned long long token = get_token();
