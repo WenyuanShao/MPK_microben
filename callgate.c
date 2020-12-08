@@ -13,13 +13,18 @@ callgate_abuse(void)
 {
 	printf("callgate_abuse\n");
 	assert(0);
+	return;
 }
+
+#define S_KEY 1
+#define c_KEY 2
 
 static inline void
 callgate(void)
 {
 	unsigned long long token = get_token();
-	unsigned int pkey = 2;
+	unsigned pkru = (0 << (2 * C_KEY));
+	pkru = (PKEY_DISABLE_ACCESS << (2 * S_KEY))
 
 	__asm__ __volatile__("movq %[token], %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
@@ -61,8 +66,8 @@ main(void)
 	
 	callgate();
 
-	_pkey_set(ckey, 0, 0);
-	_pkey_set(skey, PKEY_DISABLE_ACCESS, 0);
+	//_pkey_set(ckey, 0, 0);
+	//_pkey_set(skey, PKEY_DISABLE_ACCESS, 0);
 	printf("read buffer again: %d\n", *buffer);
 	exit(EXIT_SUCCESS);
 	return 0;
