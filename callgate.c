@@ -29,13 +29,14 @@ callgate(void)
 	__asm__ __volatile__("movq %[token], %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
+						 "movl %[pkru], %%eax\n\t"
 						 "cmp %[token], %%r15\n\t"
-						 "je 0f\n\t"
+						 "jne 0f\n\t"
 						 "wrpkru\n\t"
 						 "0:"
 						 "call callgate_abuse"
 						 :
-						 : "a" (pkru), [token] "rm" (token)
+						 : [pkru] "rm" (pkru), [token] "rm" (token)
 						 :);
 }
 
