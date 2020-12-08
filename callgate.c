@@ -23,7 +23,7 @@ static inline void
 callgate(void)
 {
 	unsigned long long token = get_token();
-	unsigned long long pkru = (unsigned long long)(0 << (2 * C_KEY));
+	unsigned int pkru = (0 << (2 * C_KEY));
 	pkru = (PKEY_DISABLE_ACCESS << (2 * S_KEY));
 	printf("pkru: 0x%x\n", pkru);
 
@@ -35,7 +35,7 @@ callgate(void)
 						 "movq %[pkru], %%rax\n\t"
 						 "wrpkru"
 						 :
-						 : [token] "r" (token), [pkru] "r" (pkru)
+						 : "a" (pkru), [token] "r" (token)
 						 :);
 }
 
