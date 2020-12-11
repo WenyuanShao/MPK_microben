@@ -95,9 +95,12 @@ main(void)
 	int skey, ckey;
 	int *s_buffer, *c_buffer;
 
+	printf("before init read sbuffer: ");
 	s_buffer = init(&pkey[0]);
 	printf("after init read sbuffer: ");
 	printf("%d\n", *s_buffer);
+
+	printf("before init read cbuffer: ");
 	c_buffer = init(&pkey[1]);
 	printf("after init read cbuffer: ");
 	printf("%d\n", *c_buffer);
