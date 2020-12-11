@@ -67,7 +67,7 @@ callgate()
 						 : [pkru] "rm" (pkru), [token] "rm" (token)
 						 :);
 	e = mpk_tsc();
-	printf("test: %llu\n", (e-s));
+	//printf("test: %llu\n", (e-s));
 }
 
 int
