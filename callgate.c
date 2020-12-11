@@ -96,9 +96,11 @@ main(void)
 	int *s_buffer, *c_buffer;
 
 	s_buffer = init(&pkey[0]);
-	printf("after init read sbuffer: %d\n", *s_buffer);
+	printf("after init read sbuffer: ", *s_buffer);
+	printf("%d\n", *s_buffer);
 	c_buffer = init(&pkey[1]);
-	printf("after init read cbuffer: %d\n", *c_buffer);
+	printf("after init read cbuffer: ", *c_buffer);
+	printf("%d\n", *c_buffer);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer);
