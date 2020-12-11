@@ -84,9 +84,9 @@ init(int *key) {
 void
 client_call(int *s_buffer)
 {
-	printf("read buffer: %d\n", *s_buffer);
+	printf("read buffer: %x\n", s_buffer);
 	callgate();
-	printf("read buffer: %d\n", *s_buffer);
+	printf("read buffer: %x\n", s_buffer);
 }
 
 int
