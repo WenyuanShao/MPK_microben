@@ -76,7 +76,7 @@ init(int *key) {
 	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, *key);
 	assert(status >= 0);
 	_pkey_set(*key, PKEY_DISABLE_ACCESS, 0);
-	printf("...read buffer: %x\n", buffer);
+	printf("init read buffer: %d\n", *buffer);
 
 	return buffer;
 }
@@ -84,9 +84,8 @@ init(int *key) {
 void
 client_call(int *s_buffer)
 {
-	printf("read buffer: %x\n", s_buffer);
 	callgate();
-	printf("read buffer: %x\n", s_buffer);
+	printf("expr read buffer: %d\n", *s_buffer);
 }
 
 int
@@ -97,7 +96,9 @@ main(void)
 	int *s_buffer, *c_buffer;
 
 	s_buffer = init(&pkey[0]);
+	printf("after init read sbuffer: %d\n", *s_buffer);
 	c_buffer = init(&pkey[1]);
+	printf("after init read cbuffer: %d\n", *c_buffer);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer);
