@@ -74,7 +74,7 @@ init(int *buffer) {
 	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, key);
 	assert(status >= 0);
 	_pkey_set(key, PKEY_DISABLE_ACCESS, 0);
-	//printf("read buffer: %d\n", *buffer);
+	printf("...read buffer: %x\n", buffer);
 
 	return key;
 }
@@ -94,7 +94,9 @@ main(void)
 	int skey, ckey;
 	int *s_buffer, *c_buffer;
 
+	printf("read buffer: %x\n", s_buffer);
 	pkey[0] = init(s_buffer);
+	printf("read buffer: %x\n", s_buffer);
 	pkey[1] = init(c_buffer);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
