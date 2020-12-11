@@ -89,15 +89,15 @@ client_call(int *s_buffer)
 int
 main(void)
 {
-	int status;
-	int skey, ckey;
+	//int status;
+	//int skey, ckey;
 	int s_buffer = 0, c_buffer = 0;
 
 	pkey[0] = init(&s_buffer);
 	pkey[1] = init(&c_buffer);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
-	client_call(s_buffer);
+	client_call(&s_buffer);
 
 	return 0;
 }
