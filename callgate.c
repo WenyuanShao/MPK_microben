@@ -37,14 +37,16 @@ callgate()
 	__asm__ __volatile__("movq %[token], %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
-						 "movq %%esp %[caller_addr]"
+						 "movq %%esp %[caller_addr]\n\t"
 						 "movl %[pkru], %%eax\n\t"
+						 "wrpkru\n\t"
 						 "cmp %[token], %%r15\n\t"
 						 "jne 1f\n\t"
-						 "0:\n\t"
-						 "call callgate_abuse\n\t"
+						 "call push_invstk\n\t"
+						 "jmp 2f\n\f"
 						 "1:\n\t"
-						 "wrpkru"
+						 "call callgate_abuse\n\t"
+						 "2:"
 						 : [caller_addr] "=rm" (caller_addr)
 						 : [pkru] "rm" (pkru), [token] "rm" (token)
 						 :);
