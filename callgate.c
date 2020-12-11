@@ -95,6 +95,7 @@ main(void)
 	pkey[0] = init(s_buffer);
 	pkey[1] = init(c_buffer);
 
+	_pkey_set(skey, PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer);
 
 	return 0;
