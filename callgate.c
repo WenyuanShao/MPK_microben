@@ -76,7 +76,7 @@ init(int *buffer) {
 	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, key);
 	assert(status >= 0);
 	_pkey_set(key, PKEY_DISABLE_ACCESS, 0);
-	printf("read buffer: %d\n", *s_buffer);
+	printf("read buffer: %d\n", *buffer);
 
 	return key;
 }
