@@ -59,24 +59,26 @@ callgate()
 						 :);
 }
 
-int
-init(int *buffer) {
-	int status;
-	int key = _pkey_alloc();
+int*
+init(int *key) {
+	int  status;
+	int *buffer;
 
-	assert(key >= 0);
+	*key = _pkey_alloc();
+
+	assert(*key >= 0);
 	buffer = mmap(NULL, getpagesize(), PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (buffer == MAP_FAILED)
 		errExit("mmap");
 
 	*buffer = __LINE__;
-	_pkey_set(key, 0, 0);
-	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, key);
+	_pkey_set(*key, 0, 0);
+	status = _pkey_mprotect(buffer, getpagesize(), PROT_READ | PROT_WRITE, *key);
 	assert(status >= 0);
-	_pkey_set(key, PKEY_DISABLE_ACCESS, 0);
+	_pkey_set(*key, PKEY_DISABLE_ACCESS, 0);
 	printf("...read buffer: %x\n", buffer);
 
-	return key;
+	return buffer;
 }
 
 void
@@ -94,10 +96,8 @@ main(void)
 	int skey, ckey;
 	int *s_buffer, *c_buffer;
 
-	printf("read buffer: %x\n", s_buffer);
-	pkey[0] = init(s_buffer);
-	printf("read buffer: %x\n", s_buffer);
-	pkey[1] = init(c_buffer);
+	s_buffer = init(&pkey[0]);
+	c_buffer = init(&pkey[1]);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer);
