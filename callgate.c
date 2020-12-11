@@ -18,6 +18,13 @@ callgate_abuse(void)
 	return;
 }
 
+void
+push_invstk(void)
+{
+	printf("push invstk\n");
+	return;
+}
+
 #define S_KEY 1
 #define C_KEY 2
 
