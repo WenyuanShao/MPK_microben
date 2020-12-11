@@ -53,12 +53,12 @@ callgate()
 						 "movl %[pkru], %%eax\n\t"
 						 "wrpkru\n\t"
 						 "cmp %[token], %%r15\n\t"
-						 //"jne 1f\n\t"
-						 //"call push_invstk\n\t"
-						 //"jmp 2f\n\f"
-						 //"1:\n\t"
-						 //"call callgate_abuse\n\t"
-						 //"2:"
+						 "jne 1f\n\t"
+						 "call push_invstk\n\t"
+						 "jmp 2f\n\f"
+						 "1:\n\t"
+						 "call callgate_abuse\n\t"
+						 "2:"
 						 : [caller_addr] "=rm" (caller_addr)
 						 : [pkru] "rm" (pkru), [token] "rm" (token)
 						 :);
