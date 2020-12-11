@@ -35,6 +35,7 @@ callgate()
 {
 	unsigned long long caller_addr;
 	unsigned long long token = get_token();
+	unsigned long long e, s;
 	unsigned int pkru = (0 << (2 * S_KEY));
 	pkru = (PKEY_DISABLE_ACCESS << (2 * C_KEY));
 	//printf("pkru: 0x%x\n", pkru);
@@ -43,6 +44,7 @@ callgate()
 	 * Composite version should rely on stubs to save current state of
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
+	s = mpk_tsc();
 	__asm__ __volatile__("movq %[token], %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
@@ -59,6 +61,8 @@ callgate()
 						 : [caller_addr] "=rm" (caller_addr)
 						 : [pkru] "rm" (pkru), [token] "rm" (token)
 						 :);
+	e = mpk_tsc();
+	printf("test: %llu\n", (e-s));
 }
 
 int
