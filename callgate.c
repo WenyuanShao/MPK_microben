@@ -80,6 +80,7 @@ init(int *buffer) {
 void
 client_call(int *s_buffer)
 {
+	printf("read buffer: %d\n", *s_buffer);
 	callgate();
 	printf("read buffer: %d\n", *s_buffer);
 }
