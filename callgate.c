@@ -77,7 +77,7 @@ init(int **buffer) {
 	assert(status >= 0);
 	_pkey_set(key, PKEY_DISABLE_ACCESS, 0);
 	printf("read buffer");
-	printf("%d\n", *buffer);
+	printf("%d\n", **buffer);
 
 	return key;
 }
@@ -90,7 +90,7 @@ client_call(int *s_buffer)
 	s = mpk_tsc();
 	callgate();
 	e = mpk_tsc();
-	printf("callgate overhead: %d\n", (e-s));
+	printf("callgate overhead: %llu cycles\n", (e-s));
 	printf("expr read buffer: %d\n", *s_buffer);
 }
 
