@@ -61,7 +61,7 @@ callgate()
 	__asm__ __volatile__("movq $token, %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
-						 "movq %%rsp, %[caller_addr]\n\t"
+						 //"movq %%rsp, %[caller_addr]\n\t"
 						 "movl $pkru_invstk, %%eax\n\t"
 						 "wrpkru\n\t"
 						 //push into stack
@@ -80,7 +80,8 @@ callgate()
 						 "1:\n\t"
 						 "call callgate_abuse\n\t"
 						 "2:"
-						 : [caller_addr] "=rm" (caller_addr)
+						 //: [caller_addr] "=rm" (caller_addr)
+						 :
 						 :
 						 :);
 	e = mpk_tsc();

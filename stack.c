@@ -4,12 +4,12 @@
 static unsigned long T = 111;
 
 struct record {
-	unsigned long sp;
-	unsigned long ip;
+	unsigned long long sp;
+	unsigned long long ip;
 };
 
 struct stack {
-	unsigned long top;
+	unsigned long long top;
 	struct record r[10];
 	//int r[10];
 };
