@@ -67,7 +67,8 @@ callgate()
 						 "movq $tid, %%rax\n\t"
 						 "shl $0x7, %%rax\n\t"
 						 "add $s, %%rax\n\t"
-						 "movq (%%rax), %%rax\n\t"
+						 "movq $s, %%rax\n\t"
+						 //"movq (%%rax), %%rax\n\t"
 						 //"movq $tid, %%rdx\n\t"
 						 //"shl $0x3, %%rdx\n\t"
 						 //"add %%rdx, %%rax\n\t"
@@ -89,10 +90,12 @@ callgate()
 						// "call callgate_abuse\n\t"
 						// "2:"
 						 //: [caller_addr] "=rm" (caller_addr)
-						 :
+						 : "=a" (a)
 						 :
 						 :);
 	printf("test: %llu\n", s[tid].r[0].sp);
+	printf("a: %x\n", a);
+	printf("test: %x\n", s);
 }
 
 int
