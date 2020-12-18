@@ -14,10 +14,10 @@ struct stack {
 };
 
 int pkey[2];
-static unsigned long long token = 1;
-static unsigned long long pkru_invstk = 0;
-static unsigned long long pkru_callee = 0;
-static unsigned long long tid = 0;
+static unsigned long long token  = 1;
+static unsigned long pkru_invstk = 0;
+static unsigned long pkru_callee = 0;
+static unsigned long long tid    = 0;
 static struct stack s[8];
 
 static inline unsigned long long
