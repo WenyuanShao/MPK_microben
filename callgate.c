@@ -49,22 +49,18 @@ caller_func(void)
 static inline void
 callgate()
 {
-	//unsigned int pkru = (0 << (2 * S_KEY));
-	//printf("pkru: 0x%x\n", pkru);
-
-	unsigned long long a;
 	/* 
 	 * Composite version should rely on stubs to save current state of
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
-	printf("test: %llu\n", s[tid].r[0].sp);
+	unsigned long long e, s;
+	s = mpk_tsc();
 	__asm__ __volatile__("movq $token, %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
 						 //"movq %%rsp, %[caller_addr]\n\t"
 						 "movl $pkru_invstk, %%eax\n\t"
-						 //"wrpkru\n\t"
-						 //push into stack
+						 "wrpkru\n\t"
 						 "movq $tid, %%rax\n\t"
 						 "movq (%%rax), %%rax\n\t"
 						 "shl $0x7, %%rax\n\t"
@@ -74,32 +70,22 @@ callgate()
 						 "add %%rdx, %%rax\n\t"
 						 "add $16, %%rax\n\t"
 						 "movq %%rsp, (%%rax)\n\t"
-						 //"shl $0x3, %%rdx\n\t"
-						 //"add %%rdx, %%rax\n\t"
-						 //"add $0x1, %%rax\n\t"
-						 //"shl $0x4, %%rax\n\t"
-						 //"movq %%rsp, (%%rax)\n\t"
-						 //"movq (%%rax), %%rcx\n\t"
-						 //"movq %%rsp, 0x8(%%rax, %%rcx, 16)\n\t"
-						 //done
-						// "xor %%rcx, %%rcx\n\t"
-						// "xor %%rdx, %%rdx\n\t"
-						// "movl $pkru_callee, %%eax\n\t"
-						// "wrpkru\n\t"
-						// "cmp $token, %%r15\n\t"
-						// "jne 1f\n\t"
-						// "call caller_func\n\t"
-						// "jmp 2f\n\t"
-						// "1:\n\t"
-						// "call callgate_abuse\n\t"
-						// "2:"
-						 //: [caller_addr] "=rm" (caller_addr)
-						 : "=a" (a)
+						 "xor %%rcx, %%rcx\n\t"
+						 "xor %%rdx, %%rdx\n\t"
+						 "movl $pkru_callee, %%eax\n\t"
+						 "wrpkru\n\t"
+						 "cmp $token, %%r15\n\t"
+						 "jne 1f\n\t"
+						 //"call caller_func\n\t"
+						 "jmp 2f\n\t"
+						 "1:\n\t"
+						 "call callgate_abuse\n\t"
+						 "2:"
+						 :
 						 :
 						 :);
-	printf("test: %llu\n", s[tid].r[0].sp);
-	printf("a: %x\n", a);
-	printf("test: %x\n", s);
+	e = mpk_tsc();
+	printf("overhead: %llu\n", e-s);
 }
 
 int
