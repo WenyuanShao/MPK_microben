@@ -65,9 +65,9 @@ callgate()
 						 "movl $pkru_invstk, %%eax\n\t"
 						 "wrpkru\n\t"
 						 //push into stack
-						 "movq $s, %%rax\n\t"
-						 "movq (%%rax), %%rcx\n\t"
-						 "movq %%rsp, 0x8(%%rax, %%rcx, 16)\n\t"
+						 //"movq $s, %%rax\n\t"
+						 //"movq (%%rax), %%rcx\n\t"
+						 //"movq %%rsp, 0x8(%%rax, %%rcx, 16)\n\t"
 						 //done
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
@@ -76,7 +76,7 @@ callgate()
 						 "cmp $token, %%r15\n\t"
 						 "jne 1f\n\t"
 						 "call caller_func\n\t"
-						 "jmp 2f:\n\t"
+						 "jmp 2f\n\t"
 						 "1:\n\t"
 						 "call callgate_abuse\n\t"
 						 "2:"
