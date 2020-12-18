@@ -16,7 +16,8 @@ int pkey[2];
 static unsigned long long token = 1;
 static unsigned long long pkru_invstk = 0;
 static unsigned long long pkru_callee = 0;
-static struct stack s;
+static unsigned long long tid = 0;
+static struct stack s[10];
 
 static inline unsigned long long
 get_token(void)
@@ -35,7 +36,7 @@ callgate_abuse(void)
 }
 
 void
-push_invstk(void)
+caller_func(void)
 {
 	//printf("push invstk\n");
 	return;
