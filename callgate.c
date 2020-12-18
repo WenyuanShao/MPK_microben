@@ -2,7 +2,21 @@
 #include <assert.h>
 #include <stdlib.h>
 
+struct record {
+	unsigned long long sp;
+	unsigned long long ip;
+}
+
+struct stack {
+	unsigned long long top;
+	struct record r[10];
+}
+
 int pkey[2];
+static unsigned long long token = 1;
+static unsigned long long pkru_invstk = 0;
+static unsigned long long pkru_callee = 0;
+static struct stack s;
 
 static inline unsigned long long
 get_token(void)
@@ -34,35 +48,38 @@ static inline void
 callgate()
 {
 	unsigned long long caller_addr;
-	unsigned long long token = get_token();
 	unsigned long long e, s;
 
 	s = mpk_tsc();
-	unsigned int pkru = (0 << (2 * S_KEY));
-	pkru = (PKEY_DISABLE_ACCESS << (2 * C_KEY));
+	//unsigned int pkru = (0 << (2 * S_KEY));
 	//printf("pkru: 0x%x\n", pkru);
 
 	/* 
 	 * Composite version should rely on stubs to save current state of
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
-	__asm__ __volatile__("movq %[token], %%r15\n\t"
+	__asm__ __volatile__("movq $token, %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
 						 "movq %%rsp, %[caller_addr]\n\t"
-						 "movl %[pkru], %%eax\n\t"
+						 "movl $pkru_invstk, %%eax\n\t"
 						 "wrpkru\n\t"
-						 "call push_invstk\n\t"
+						 //push into stack
+						 "movq $s, %%rax\n\t"
+						 "movq (%%rax), %%rcx\n\t"
+						 "movq %%rsp, 0x8(%%rax, %%rcx, 16)\n\t"
+						 //done
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
-						 "movl %[pkru], %%eax\n\t"
+						 "movl $pkru_callee, %%eax\n\t"
 						 "wrpkru\n\t"
-						 "cmp %[token], %%r15\n\t"
+						 "cmp $token, %%r15\n\t"
 						 "jne 1f\n\t"
-						 "jmp 2f\n\f"
+						 "call caller_func\n\t"
+						 "jmp 2f:\n\t"
 						 "1:\n\t"
 						 "call callgate_abuse\n\t"
-						 "2:\n\t"
+						 "2:"
 						 : [caller_addr] "=rm" (caller_addr)
 						 : [pkru] "rm" (pkru), [token] "rm" (token)
 						 :);
