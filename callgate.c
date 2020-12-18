@@ -66,7 +66,7 @@ callgate()
 						 //"wrpkru\n\t"
 						 //push into stack
 						 "movq $tid, %%rax\n\t"
-						 "shl $0x7, %%rax\n\t"
+						// "shl $0x7, %%rax\n\t"
 						 //"add $s, %%rax\n\t"
 						 //"movq $tid, %%rdx\n\t"
 						 //"shl $0x3, %%rdx\n\t"
