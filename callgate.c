@@ -9,7 +9,8 @@ struct record {
 
 struct stack {
 	unsigned long long top;
-	struct record r[10];
+	unsigned long long pad;
+	struct record r[7];
 };
 
 int pkey[2];
@@ -17,7 +18,7 @@ static unsigned long long token = 1;
 static unsigned long long pkru_invstk = 0;
 static unsigned long long pkru_callee = 0;
 static unsigned long long tid = 0;
-static struct stack s[10];
+static struct stack s[8];
 
 static inline unsigned long long
 get_token(void)
@@ -48,10 +49,6 @@ caller_func(void)
 static inline void
 callgate()
 {
-	unsigned long long caller_addr;
-	unsigned long long e, s;
-
-	s = mpk_tsc();
 	//unsigned int pkru = (0 << (2 * S_KEY));
 	//printf("pkru: 0x%x\n", pkru);
 
@@ -93,7 +90,6 @@ callgate()
 						 :
 						 :
 						 :);
-	e = mpk_tsc();
 	printf("test: %llu\n", s[tid].r[0].sp);
 }
 
