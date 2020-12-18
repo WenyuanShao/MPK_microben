@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -g
+CFLAGS=-Wall -g -fno_pie -O0
 INCLUDE=-I .
 LIBS=
 CFILES=$(wildcard ./*.c)
