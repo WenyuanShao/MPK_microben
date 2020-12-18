@@ -10,7 +10,8 @@ struct record {
 
 struct stack {
 	unsigned long long top;
-	struct record r[10];
+	unsigned long long pad;
+	struct record r[7];
 	//int r[10];
 };
 
