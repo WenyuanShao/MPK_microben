@@ -9,7 +9,7 @@ TARGETS=$(CFILES:%.c=%)
 all: $(TARGETS)
 
 $(TARGETS): %: %.o
-	$(CC) $(INCLUDE) $(LIBS) -o $@ $<
+	$(CC) $(INCLUDE) $(LIBS) -fno_pie -o $@ $<
 
 $(OBJS): %.o: %.c
 	$(CC) -c $(CFLAGS) -o $@ $<
