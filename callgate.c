@@ -19,14 +19,7 @@ static unsigned long pkru_invstk = 0;
 static unsigned long pkru_callee = 0;
 static unsigned long long tid    = 0;
 static struct stack s[8];
-
-static inline unsigned long long
-get_token(void)
-{
-	unsigned long long ret = ((unsigned long long)rand() << 32) | rand();
-
-	return ret;
-}
+unsigned long long verifier;
 
 void
 callgate_abuse(void)
@@ -43,9 +36,6 @@ caller_func(void)
 	return;
 }
 
-#define S_KEY 1
-#define C_KEY 2
-
 static inline void
 callgate()
 {
@@ -58,14 +48,14 @@ callgate()
 	__asm__ __volatile__("movq $token, %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
-						 //"movq %%rsp, %[caller_addr]\n\t"
+						 "movq %%rsp, %1\n\t"
 						 "movl $pkru_invstk, %%eax\n\t"
 						 "wrpkru\n\t"
 						 "movq $tid, %%rax\n\t"
 						 "movq (%%rax), %%rax\n\t"
 						 "shl $0x7, %%rax\n\t"
 						 "add $s, %%rax\n\t"
-						 "movq (%%rax), %%rdx\n\t"      //top & stack of current thread
+						 "movq (%%rax), %%rdx\n\t"
 						 "shl $0x4, %%rdx\n\t"
 						 "add %%rdx, %%rax\n\t"
 						 "add $16, %%rax\n\t"
@@ -81,9 +71,9 @@ callgate()
 						 "1:\n\t"
 						 "call callgate_abuse\n\t"
 						 "2:"
+						 : "=r" (verifier)
 						 :
-						 :
-						 :);
+						 : "memory", "cc");
 	e = mpk_tsc();
 	printf("overhead: %llu\n", e-s);
 }
@@ -110,11 +100,7 @@ init(int **buffer) {
 void
 client_call(int *s_buffer)
 {
-	unsigned long long s, e;
-
-	s = mpk_tsc();
 	callgate();
-	e = mpk_tsc();
 	printf("callgate overhead: %llu cycles\n", (e-s));
 	printf("expr read buffer: %d\n", *s_buffer);
 }
@@ -122,8 +108,6 @@ client_call(int *s_buffer)
 int
 main(void)
 {
-	//int status;
-	//int skey, ckey;
 	int *s_buffer, *c_buffer;
 
 	pkey[0] = init(&s_buffer);
