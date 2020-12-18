@@ -65,8 +65,8 @@ callgate()
 						 //push into stack
 						 "movq $tid, %%rax\n\t"
 						 "shl $0x7, %%rax\n\t"
-						 /*"movq (%%rax), %%rax\n\t"
-						 "movq $tid, %%rdx\n\t"
+						 "movq (%%rax), %%rax\n\t"
+						 /*"movq $tid, %%rdx\n\t"
 						 "shl $0x3, %%rdx\n\t"
 						 "add %%rdx, %%rax\n\t"
 						 "add $0x1, %%rax\n\t"
