@@ -93,7 +93,6 @@ callgate()
 						 //: [caller_addr] "=rm" (caller_addr)
 						 : "=a" (a)
 						 :
-						 :
 						 :);
 	printf("test: %llu\n", s[tid].r[0].sp);
 	printf("a: %llu\n", a);
