@@ -56,12 +56,13 @@ callgate()
 	 * Composite version should rely on stubs to save current state of
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
+	printf("test: %llu\n", s[tid].r[0].sp);
 	__asm__ __volatile__("movq $token, %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
 						 //"movq %%rsp, %[caller_addr]\n\t"
 						 "movl $pkru_invstk, %%eax\n\t"
-						 "wrpkru\n\t"
+						 //"wrpkru\n\t"
 						 //push into stack
 						 "movq $tid, %%rax\n\t"
 						 "shl $0x7, %%rax\n\t"
@@ -107,7 +108,7 @@ init(int **buffer) {
 	_pkey_set(key, 0, 0);
 	status = _pkey_mprotect(*buffer, getpagesize(), PROT_READ | PROT_WRITE, key);
 	assert(status >= 0);
-	_pkey_set(key, PKEY_DISABLE_ACCESS, 0);
+//	_pkey_set(key, PKEY_DISABLE_ACCESS, 0);
 
 	return key;
 }
