@@ -66,11 +66,11 @@ callgate()
 						 "movq $tid, %%rax\n\t"
 						 "shl $0x7, %%rax\n\t"
 						 "movq (%%rax), %%rax\n\t"
-						 /*"movq $tid, %%rdx\n\t"
+						 "movq $tid, %%rdx\n\t"
 						 "shl $0x3, %%rdx\n\t"
 						 "add %%rdx, %%rax\n\t"
 						 "add $0x1, %%rax\n\t"
-						 "shl $0x4, %%rax\n\t"
+						 /*"shl $0x4, %%rax\n\t"
 						 "movq %%esp, (%%rax)\n\t"*/
 						 //"movq (%%rax), %%rcx\n\t"
 						 //"movq %%rsp, 0x8(%%rax, %%rcx, 16)\n\t"
