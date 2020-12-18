@@ -79,7 +79,7 @@ callgate()
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
 						 "movl $pkru_callee, %%eax\n\t"
-						 "wrpkru\n\t"
+						// "wrpkru\n\t"
 						 "cmp $token, %%r15\n\t"
 						 "jne 1f\n\t"
 						 "call caller_func\n\t"
