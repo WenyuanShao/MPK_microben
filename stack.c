@@ -29,8 +29,8 @@ static struct stack s[2];
 
 void test (void)
 {
-	int  i =0;
-	int j = 0;
+	unsigned long long i =0;
+	unsigned long long j = 0;
 	s[i].r[j].sp = 0x2222;
 	s[i].r[j].ip = 0x3333;
 	s[1].top++;
