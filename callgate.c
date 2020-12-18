@@ -52,6 +52,7 @@ callgate()
 	//unsigned int pkru = (0 << (2 * S_KEY));
 	//printf("pkru: 0x%x\n", pkru);
 
+	unsigned long long a;
 	/* 
 	 * Composite version should rely on stubs to save current state of
 	 * a thread. As a result, in this prototype, I don't consider it.
