@@ -5,12 +5,12 @@
 struct record {
 	unsigned long long sp;
 	unsigned long long ip;
-}
+};
 
 struct stack {
 	unsigned long long top;
 	struct record r[10];
-}
+};
 
 int pkey[2];
 static unsigned long long token = 1;
@@ -81,7 +81,7 @@ callgate()
 						 "call callgate_abuse\n\t"
 						 "2:"
 						 : [caller_addr] "=rm" (caller_addr)
-						 : [pkru] "rm" (pkru), [token] "rm" (token)
+						 :
 						 :);
 	e = mpk_tsc();
 	//printf("test: %llu\n", (e-s));
