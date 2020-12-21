@@ -103,7 +103,6 @@ void
 client_call(int *s_buffer)
 {
 	callgate();
-	printf("callgate overhead: %llu cycles\n", (e-s));
 	printf("expr read buffer: %d\n", *s_buffer);
 }
 
