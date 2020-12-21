@@ -44,7 +44,7 @@ callgate()
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
 	unsigned long long e, s;
-	printf("top: %llu\n", s[0].r[s[0].top]);
+	printf("top: %llu\n", s[0].top);
 	s = mpk_tsc();
 	__asm__ __volatile__("movq $token, %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
@@ -79,7 +79,7 @@ callgate()
 						 : "memory", "cc");
 	e = mpk_tsc();
 	printf("overhead: %llu\n", e-s);
-	printf("top: %llu\n", s[0].r[s[0].top]);
+	printf("top: %llu\n", s[0].top);
 }
 
 int
