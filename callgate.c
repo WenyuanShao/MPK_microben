@@ -43,9 +43,9 @@ callgate()
 	 * Composite version should rely on stubs to save current state of
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
-	unsigned long long e, s;
+	unsigned long long end, start;
 	printf("top: %llu\n", s[0].top);
-	s = mpk_tsc();
+	start = mpk_tsc();
 	__asm__ __volatile__("movq $token, %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
@@ -77,8 +77,8 @@ callgate()
 						 : "=r" (verifier)
 						 :
 						 : "memory", "cc");
-	e = mpk_tsc();
-	printf("overhead: %llu\n", e-s);
+	end = mpk_tsc();
+	printf("overhead: %llu\n", end-start);
 	printf("top: %llu\n", s[0].top);
 }
 
