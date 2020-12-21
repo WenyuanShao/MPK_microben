@@ -48,7 +48,7 @@ callgate()
 	__asm__ __volatile__("movq $token, %%r15\n\t"
 						 "xor %%rcx, %%rcx\n\t"
 						 "xor %%rdx, %%rdx\n\t"
-						 "movq %%rsp, %1\n\t"
+						 "movq %%rsp, %0\n\t"
 						 "movl $pkru_invstk, %%eax\n\t"
 						 "wrpkru\n\t"
 						 "movq $tid, %%rax\n\t"
