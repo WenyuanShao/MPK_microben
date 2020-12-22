@@ -45,16 +45,16 @@ callgate()
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
 	unsigned long long end, start;
-	unsigned long long aaa, bbb;
+	unsigned long long aaa = 0, bbb = 0;
 	printf("top: %llu\n", s[0].top);
 	start = mpk_tsc();
 	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movq %%rsp, %0\n\t"
-	                     /*"movl $pkru_invstk, %%eax\n\t"
+	                     "movl $pkru_invstk, %%eax\n\t"
                          "wrpkru\n\t" // switch to user_level_kernel
-	                     "movq $0x0, %%rax\n\t" // tid = 0x0
+	                     /*"movq $0x0, %%rax\n\t" // tid = 0x0
 						 "movq $s, %%rax\n\t"
 	                     "movq $0x30, %%rcx\n\t"
 						 "movq %%rcx, %1\n\t"
