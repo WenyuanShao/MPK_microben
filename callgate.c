@@ -111,7 +111,7 @@ callgate()
 						 :
 						 : "memory", "cc");
 	end = mpk_tsc();
-	printf("aaa: 0x%llx, bbb: 0x%llx\n", aaa, bbb);
+	printf("aaa: 0x%llx, bbb: 0x%llx, s: 0x%llx\n", aaa, bbb, s);
 	printf("verifier: 0x%llx\n", verifier);
 	printf("overhead: %llu\n", end-start);
 	printf("top: %llu\n", s[0].top);
