@@ -47,6 +47,7 @@ callgate()
 	unsigned long long end, start;
 	unsigned long long aaa = 0, bbb = 0;
 	printf("top: %llu\n", s[0].top);
+	printf("aaa: 0x%llx, bbb: 0x%llx\n", aaa, bbb);
 	start = mpk_tsc();
 	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
