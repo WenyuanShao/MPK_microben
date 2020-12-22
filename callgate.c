@@ -72,8 +72,8 @@ callgate()
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_callee, %%eax\n\t"
-	                     "wrpkru\n\t"
-	                     "cmp $0xfffffffffffffff0, %%r15\n\t"
+	                     "wrpkru\n\t"*/
+	                     "cmp $0xffffffffffffffff, %%r15\n\t"/*
 	                     "jne 1f\n\t"
 	                   //"call caller_func\n\t"
 	                     "jmp 2f\n\t"
