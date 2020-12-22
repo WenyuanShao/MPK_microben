@@ -59,9 +59,9 @@ callgate()
 						 "movq $s, %%rax\n\t"
 	                     "movq $0x30, %%rcx\n\t"
 						 "lea 0x0(%%rax, %%rcx, 8), %%rdx\n\t"
-						 "movq %%rdx, %1\n\t"
 	                     "movq %%rdx, %%rax\n\t"
 	                     "movq (%%rdx), %%rcx\n\t"
+						 "movq %%rcx, %1\n\t"
 	                     /*"movq $0x0, %%rax\n\t" // tid = 0x0
 	                     "shl $0x7, %%rax\n\t"
 	                     "add $s, %%rax\n\t"
