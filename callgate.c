@@ -66,11 +66,12 @@ callgate()
 	                     "shl $0x7, %%rax\n\t"
 	                     "add $s, %%rax\n\t"
 						 "movq %%rax, %1\n\t"
-	                     */"shl $0x4, %%rdx\n\t"
+	                     */
+						 /*"shl $0x4, %%rdx\n\t"
 	                     "add %%rdx, %%rax\n\t"
 	                     "add $16, %%rax\n\t"
 	                     "movq %%rsp, (%%rax)\n\t" // save invocation record
-	                     "add $1, (%%rcx)\n\t"
+	                     "add $1, (%%rcx)\n\t"*/
 	                     /*"xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_callee, %%eax\n\t"
