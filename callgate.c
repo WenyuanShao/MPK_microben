@@ -45,10 +45,10 @@ callgate()
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
 	unsigned long long end, start;
+	unsigned long long aaa, bbb;
 	printf("top: %llu\n", s[0].top);
 	start = mpk_tsc();
 	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t"
-	                     "movq %%r15, %0\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movq %%rsp, %0\n\t"
@@ -59,13 +59,13 @@ callgate()
 	                     "movq $0x30, %%rcx\n\t"
 						 "lea 0x0(%%rax, %%rcx, 8), %%rdx\n\t"
 	                     "movq %%rdx, %%rax\n\t"
+						 "movq %%rdx, %1\n\t"
 	                     "movq (%%rdx), %%rcx\n\t"
-	                     ""
-	                     //"shl $0x7, %%rax\n\t"
-	                     //"add $s, %%rax\n\t"
-	                     //"movq %%rax, %%rcx\n\t"
-	                     //"movq (%%rax), %%rdx\n\t"
-	                     "shl $0x4, %%rdx\n\t"
+	                     "movq $0x0, %%rax\n\t" // tid = 0x0
+	                     "shl $0x7, %%rax\n\t"
+	                     "add $s, %%rax\n\t"
+						 "movq %%rax, %1\n\t"
+	                     /*"shl $0x4, %%rdx\n\t"
 	                     "add %%rdx, %%rax\n\t"
 	                     "add $16, %%rax\n\t"
 	                     "movq %%rsp, (%%rax)\n\t" // save invocation record
@@ -81,7 +81,7 @@ callgate()
 	                     "1:\n\t"						 
 	                     "call callgate_abuse\n\t"
 	                     "2:\n\t"
-	                     "movq $0xfffffffffffffff1, %%r15\n\t"
+	                     /*"movq $0xfffffffffffffff1, %%r15\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_invstk, %%eax\n\t"
@@ -105,11 +105,12 @@ callgate()
 	                     "jmp 4f\n\t"
 	                     "3:\n\t"
 	                     "call callgate_abuse\n\t"
-						 "4:"
-						 : "=r" (verifier)
+						 "4:"*/
+						 : "=r" (verifier), "=r" (aaa), "=r" (bbb)
 						 :
 						 : "memory", "cc");
 	end = mpk_tsc();
+	printf("aaa: 0x%llx, bbb: 0x%llx\n", aaa, bbb);
 	printf("verifier: 0x%llx\n", verifier);
 	printf("overhead: %llu\n", end-start);
 	printf("top: %llu\n", s[0].top);
