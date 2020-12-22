@@ -85,7 +85,7 @@ callgate()
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_invstk, %%eax\n\t"
 						 "wrpkru\n\t"
-	                     /*"movq $0x0, %%rax\n\t" // tid = 0x0
+	                     "movq $0x0, %%rax\n\t" // tid = 0x0
 	                     "shl $0x7, %%rax\n\t"
 	                     "add $s, %%rax\n\t"
 	                     "movq %%rax, %%rcx\n\t"
@@ -93,7 +93,7 @@ callgate()
 	                     "shl $0x4, %%rdx\n\t"
 	                     "add $16, %%rax\n\t"
 	                     "movq (%%rax), %rsp\n\t"
-	                     "sub $1, (%%rax)\n\t"
+	                     /*"sub $1, (%%rax)\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_caller, %%eax\n\t"
