@@ -71,7 +71,7 @@ callgate()
 	                     "add $16, %%rax\n\t"
 	                     "movq %%rsp, (%%rax)\n\t" // save invocation record
 	                     "add $1, (%%rcx)\n\t"
-	                     "xor %%rcx, %%rcx\n\t"
+	                     /*"xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_callee, %%eax\n\t"
 	                     "wrpkru\n\t"
