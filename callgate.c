@@ -46,7 +46,7 @@ callgate()
 	unsigned long long end, start;
 	printf("top: %llu\n", s[0].top);
 	start = mpk_tsc();
-	__asm__ __volatile__(/*"movq $0xffffffffffffffff, %%r15\n\t"
+	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t"
 	                     "movq %%r15, %0\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
@@ -73,14 +73,14 @@ callgate()
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_callee, %%eax\n\t"
 	                     "wrpkru\n\t"
-	                     "cmp $0xffffffffffffffff, %%r15\n\t"
+	                     "cmp $0xfffffffffffffff0, %%r15\n\t"
 	                     "jne 1f\n\t"
 	                   //"call caller_func\n\t"
 	                     "jmp 2f\n\t"
 	                     "1:\n\t"						 
 	                     "call callgate_abuse\n\t"
-	                     "2:\n\t"*/
-	                     "movq $0xffffffffffffffff, %%r15\n\t"
+	                     "2:\n\t"
+	                     "movq $0xfffffffffffffff1, %%r15\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_invstk, %%eax\n\t"
@@ -92,19 +92,19 @@ callgate()
 	                     "movq (%%rax), %%rdx\n\t"
 	                     "shl $0x4, %%rdx\n\t"
 	                     "add $16, %%rax\n\t"
-	                     "movq (%%rax), %rsp\n\t"
-	                     /*"sub $1, (%%rax)\n\t"
+	                     "movq (%%rax), %%rsp\n\t"
+	                     "sub $1, (%%rax)\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_caller, %%eax\n\t"
 	                     "wrpkru\n\t"
-	                     //"cmp $0xffffffffffffffff, %%r15"
+	                     "cmp $0xfffffffffffffff1, %%r15"
 	                     "jne 3f\n\t"
 	                   //"call callee_func\n\t"
 	                     "jmp 4f\n\t"
 	                     "3:\n\t"
 	                     "call callgate_absue\n\t"
-						 "4:"*/
+						 "4:"
 						 : "=r" (verifier)
 						 :
 						 : "memory", "cc");
