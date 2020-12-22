@@ -112,6 +112,7 @@ callgate()
 	end = mpk_tsc();
 	printf("overhead: %llu\n", end-start);
 	printf("top: %llu\n", s[0].top);
+	ptintf("verifier: 0x%x\n", verifier);
 }
 
 int
