@@ -17,6 +17,7 @@ int pkey[2];
 static unsigned long long token  = ~(unsigned long long)0;
 static unsigned long pkru_invstk = 0;
 static unsigned long pkru_callee = 0;
+static unsigned long pkru_caller = 0;
 static unsigned long long tid    = 0;
 static struct stack s[8];
 unsigned long long verifier;
@@ -103,7 +104,7 @@ callgate()
 	                   //"call callee_func\n\t"
 	                     "jmp 4f\n\t"
 	                     "3:\n\t"
-	                     "call callgate_absue\n\t"
+	                     "call callgate_abuse\n\t"
 						 "4:"
 						 : "=r" (verifier)
 						 :
