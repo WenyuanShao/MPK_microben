@@ -47,7 +47,7 @@ callgate()
 	printf("top: %llu\n", s[0].top);
 	start = mpk_tsc();
 	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t"
-	                     "xor %%rcx, %%rcx\n\t"
+	                     /*"xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movq %%rsp, %0\n\t"
 	                     "movl $pkru_invstk, %%eax\n\t"
@@ -103,10 +103,10 @@ callgate()
 	                     "jmp 4f\n\t"
 	                     "3:\n\t"
 	                     "call callgate_absue\n\t"
-						 "4:"
+						 "4:"*/
 						 : "=r" (verifier)
 						 :
-						 : "memory", "cc", "r15");
+						 : "memory", "cc");
 	end = mpk_tsc();
 	printf("overhead: %llu\n", end-start);
 	printf("top: %llu\n", s[0].top);
