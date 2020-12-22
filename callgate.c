@@ -85,7 +85,7 @@ callgate()
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_invstk, %%eax\n\t"
 						 "wrpkru\n\t"
-	                     "movq $0x0, %%rax\n\t" // tid = 0x0
+	                     /*"movq $0x0, %%rax\n\t" // tid = 0x0
 	                     "shl $0x7, %%rax\n\t"
 	                     "add $s, %%rax\n\t"
 	                     "movq %%rax, %%rcx\n\t"
@@ -104,7 +104,7 @@ callgate()
 	                     "jmp 4f\n\t"
 	                     "3:\n\t"
 	                     "call callgate_absue\n\t"
-						 "4:"
+						 "4:"*/
 						 : "=r" (verifier)
 						 :
 						 : "memory", "cc");
