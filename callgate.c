@@ -14,7 +14,7 @@ struct stack {
 };
 
 int pkey[2];
-static unsigned long long token  = 1;
+static unsigned long long token  = ~(unsigned long long)0;
 static unsigned long pkru_invstk = 0;
 static unsigned long pkru_callee = 0;
 static unsigned long long tid    = 0;
@@ -46,34 +46,64 @@ callgate()
 	unsigned long long end, start;
 	printf("top: %llu\n", s[0].top);
 	start = mpk_tsc();
-	__asm__ __volatile__("movq $token, %%r15\n\t"
-						 "xor %%rcx, %%rcx\n\t"
-						 "xor %%rdx, %%rdx\n\t"
-						 "movq %%rsp, %0\n\t"
-						 "movl $pkru_invstk, %%eax\n\t"
+	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t"
+	                     "xor %%rcx, %%rcx\n\t"
+	                     "xor %%rdx, %%rdx\n\t"
+	                     "movq %%rsp, %0\n\t"
+	                     "movl $pkru_invstk, %%eax\n\t"
+                         "wrpkru\n\t" // switch to user_level_kernel
+	                     "movq $0x0, %%rax\n\t" // tid = 0x0
+						 "movq $s, %%rax\n\t"
+	                     "movq $0x30, %%rcx\n\t"
+						 "lea 0x0(%%rax, %%rcx, 8), %%rdx\n\t"
+	                     "movq %%rdx, %%rax\n\t"
+	                     "movq (%%rdx), %%rcx\n\t"
+	                     ""
+	                     //"shl $0x7, %%rax\n\t"
+	                     //"add $s, %%rax\n\t"
+	                     //"movq %%rax, %%rcx\n\t"
+	                     //"movq (%%rax), %%rdx\n\t"
+	                     "shl $0x4, %%rdx\n\t"
+	                     "add %%rdx, %%rax\n\t"
+	                     "add $16, %%rax\n\t"
+	                     "movq %%rsp, (%%rax)\n\t" // save invocation record
+	                     "add $1, (%%rcx)\n\t"
+	                     "xor %%rcx, %%rcx\n\t"
+	                     "xor %%rdx, %%rdx\n\t"
+	                     "movl $pkru_callee, %%eax\n\t"
+	                     "wrpkru\n\t"
+	                     "cmp $0xfffffffffffffff0, %%r15\n\t"
+	                     "jne 1f\n\t"
+	                   //"call caller_func\n\t"
+	                     "jmp 2f\n\t"
+	                     "1:\n\t"						 
+	                     "call callgate_abuse\n\t"
+	                     "2:\n\t"
+	                     "movq $0xfffffffffffffff1, %%r15\n\t"
+	                     "xor %%rcx, %%rcx\n\t"
+	                     "xor %%rdx, %%rdx\n\t"
+	                     "movl $pkru_invstk, %%eax\n\t"
 						 "wrpkru\n\t"
-						 "movq $tid, %%rax\n\t"
-						 "movq (%%rax), %%rax\n\t"
-						 "shl $0x7, %%rax\n\t"
-						 "add $s, %%rax\n\t"
-						 "movq %%rax, %%rcx\n\t"
-						 "movq (%%rax), %%rdx\n\t"
-						 "shl $0x4, %%rdx\n\t"
-						 "add %%rdx, %%rax\n\t"
-						 "add $16, %%rax\n\t"
-						 "movq %%rsp, (%%rax)\n\t"
-						 "add $1, (%%rcx)\n\t"
-						 "xor %%rcx, %%rcx\n\t"
-						 "xor %%rdx, %%rdx\n\t"
-						 "movl $pkru_callee, %%eax\n\t"
-						 "wrpkru\n\t"
-						 "cmp $token, %%r15\n\t"
-						 "jne 1f\n\t"
-						 //"call caller_func\n\t"
-						 "jmp 2f\n\t"
-						 "1:\n\t"
-						 "call callgate_abuse\n\t"
-						 "2:"
+	                     "movq $0x0, %%rax\n\t" // tid = 0x0
+	                     "shl $0x7, %%rax\n\t"
+	                     "add $s, %%rax\n\t"
+	                     "movq %%rax, %%rcx\n\t"
+	                     "movq (%%rax), %%rdx\n\t"
+	                     "shl $0x4, %%rdx\n\t"
+	                     "add $16, %%rax\n\t"
+	                     "movq (%%rax), %rsp\n\t"
+	                     "sub $1, (%%rax)\n\t"
+	                     "xor %%rcx, %%rcx\n\t"
+	                     "xor %%rdx, %%rdx\n\t"
+	                     "movl $pkru_caller, %%eax\n\t"
+	                     "wrpkru\n\t"
+	                     "cmp $0xfffffffffffffff1, %%r15"
+	                     "jne 3f\n\t"
+	                   //"call callee_func\n\t"
+	                     "jmp 4f\n\t"
+	                     "3:\n\t"
+	                     "call callgate_absue\n\t"
+						 "4:"
 						 : "=r" (verifier)
 						 :
 						 : "memory", "cc");
