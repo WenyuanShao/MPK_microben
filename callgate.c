@@ -106,7 +106,7 @@ callgate()
 						 "4:"
 						 : "=r" (verifier)
 						 :
-						 : "memory", "cc". "r15");
+						 : "memory", "cc", "r15");
 	end = mpk_tsc();
 	printf("overhead: %llu\n", end-start);
 	printf("top: %llu\n", s[0].top);
