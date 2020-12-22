@@ -49,7 +49,7 @@ callgate()
 	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
-	                     "movq %%rsp, %0\n\t"
+	                     //"movq %%rsp, %0\n\t"
 	                     "movl $pkru_invstk, %%eax\n\t"
                          "wrpkru\n\t" // switch to user_level_kernel
 	                     "movq $0x0, %%rax\n\t" // tid = 0x0
