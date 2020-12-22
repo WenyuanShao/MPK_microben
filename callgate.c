@@ -53,7 +53,7 @@ callgate()
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movq %%rsp, %0\n\t"
 	                     "movl $pkru_invstk, %%eax\n\t"
-                         "wrpkru\n\t" // switch to user_level_kernel
+                         "wrpkru\n\t"
 	                     /*"movq $0x0, %%rax\n\t" // tid = 0x0
 						 "movq $s, %%rax\n\t"
 	                     "movq $0x30, %%rcx\n\t"
