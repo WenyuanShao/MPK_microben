@@ -110,9 +110,9 @@ callgate()
 						 :
 						 : "memory", "cc");
 	end = mpk_tsc();
+	printf("verifier: 0x%llx\n", verifier);
 	printf("overhead: %llu\n", end-start);
 	printf("top: %llu\n", s[0].top);
-	printf("verifier: 0x%llx\n", verifier);
 }
 
 int
