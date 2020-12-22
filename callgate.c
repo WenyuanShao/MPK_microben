@@ -48,7 +48,7 @@ callgate()
 	start = mpk_tsc();
 	__asm__ __volatile__("movq $0xffffffffffffffff, %%r15\n\t"
 	                     "movq %%r15, %0\n\t"
-	                     /*"xor %%rcx, %%rcx\n\t"
+	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movq %%rsp, %0\n\t"
 	                     "movl $pkru_invstk, %%eax\n\t"
@@ -72,15 +72,15 @@ callgate()
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_callee, %%eax\n\t"
-	                     "wrpkru\n\t"*/
-	                     "cmp $0xffffffffffffffff, %%r15\n\t"/*
+	                     "wrpkru\n\t"
+	                     "cmp $0xffffffffffffffff, %%r15\n\t"
 	                     "jne 1f\n\t"
 	                   //"call caller_func\n\t"
 	                     "jmp 2f\n\t"
 	                     "1:\n\t"						 
 	                     "call callgate_abuse\n\t"
 	                     "2:\n\t"
-	                     "movq $0xfffffffffffffff1, %%r15\n\t"
+	                     "movq $0xffffffffffffffff, %%r15\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_invstk, %%eax\n\t"
@@ -104,7 +104,7 @@ callgate()
 	                     "jmp 4f\n\t"
 	                     "3:\n\t"
 	                     "call callgate_absue\n\t"
-						 "4:"*/
+						 "4:"
 						 : "=r" (verifier)
 						 :
 						 : "memory", "cc");
