@@ -14,11 +14,9 @@ struct stack {
 }__attribute__((aligned));
 
 int pkey[2];
-static unsigned long long token  = ~(unsigned long long)0;
 static unsigned long pkru_userlevel_kernel = 0;
 static unsigned long pkru_callee = 0xfffffff0;
 static unsigned long pkru_caller = 0xffffffcc;
-static unsigned long long tid    = 0;
 static struct stack s[8];
 unsigned long long verifier;
 
@@ -45,6 +43,10 @@ callgate()
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
 	unsigned long long end, start;
+	start = mpk_tsc();
+	end = mpk_tsc();
+	printf("rdtsc overhead: %llu\n", (end-start));
+
 	start = mpk_tsc();
 	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t" // caller_token
 	                     "xor %%rcx, %%rcx\n\t"
@@ -144,15 +146,11 @@ main(void)
 
 	printf("PKEY_DISABLE_ACCESS:%d\n", PKEY_DISABLE_ACCESS);
 	pkey[0] = init(&s_buffer);
-	//pkru = test_rdpkru();
-	//printf("pkru: %x, pkey: %d\n", pkru, pkey[0]);
 	pkey[1] = init(&c_buffer);
 	wrpkru(pkru);
-	pkru = test_rdpkru();
-	printf("pkru: %x, pkey: %d\n", pkru, pkey[1]);
-	//printf("expr read buffer: %d\n", *s_buffer);
+	//pkru = test_rdpkru();
+	//printf("pkru: %lx, pkey: %d\n", pkru, pkey[1]);
 
-	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer, c_buffer);
 
 	return 0;
