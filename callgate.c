@@ -73,10 +73,10 @@ callgate()
 	                     "cmp $0xfffffffffffffff0, %%r15\n\t" // caller_token check
 	                     "jne 1f\n\t"
 	                   //"call caller_func\n\t"
-	                     "jmp 2f\n\t"
-	                     "1:\n\t"
-	                     "call callgate_abuse\n\t"
-	                     "2:\n\t"
+	                   //"jmp 2f\n\t"
+	                   //"1:\n\t"
+	                   //"call callgate_abuse\n\t"
+	                   //"2:\n\t"
 	                     "movq $0xfffffffffffffff1, %%r15\n\t" // callee_token
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
@@ -99,12 +99,12 @@ callgate()
 	                     "movl $pkru_caller, %%eax\n\t"
 	                     "wrpkru\n\t"
 	                     "cmp $0xfffffffffffffff1, %%r15\n\t" // callee_token check
-	                     "jne 3f\n\t"
+	                     "jne 1f\n\t"
 	                   //"call callee_func\n\t"
-	                     "jmp 4f\n\t"
-	                     "3:\n\t"
+	                     "jmp 2f\n\t"
+	                     "1:\n\t"
 	                     "call callgate_abuse\n\t"
-	                     "4:"
+	                     "2:"
 	                     : "=r" (verifier)
 	                     :
 	                     : "memory", "cc");
