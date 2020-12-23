@@ -45,7 +45,6 @@ callgate()
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
 	unsigned long long end, start;
-	unsigned long long test = 0;
 	start = mpk_tsc();
 	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t" // caller_token
 	                     "xor %%rcx, %%rcx\n\t"
@@ -141,9 +140,17 @@ int
 main(void)
 {
 	int *s_buffer, *c_buffer;
+	unsigned long pkru = 0;
+	char r[32];
 
-//	pkey[0] = init(&s_buffer);
-//	pkey[1] = init(&c_buffer);
+	pkey[0] = init(&s_buffer);
+	pkru = test_rdpkru();
+	itoa(pkru, r, 2);
+	printf("pkru: %s\n", pkru);
+	pkey[1] = init(&c_buffer);
+	pkru = test_rdpkru();
+	itoa(pkru, r, 2);
+	printf("pkru: %s\n", pkru);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer);
