@@ -11,7 +11,7 @@ struct stack {
 	unsigned long long top;
 	unsigned long long pad;
 	struct record r[7];
-};
+}__attribute__((aligned));
 
 int pkey[2];
 static unsigned long long token  = ~(unsigned long long)0;
@@ -45,77 +45,70 @@ callgate()
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
 	unsigned long long end, start;
-	unsigned long long aaa = 0, bbb = 0;
-	printf("top: %llu\n", s[0].top);
-	printf("aaa: 0x%llx, bbb: 0x%llx\n", aaa, bbb);
+	unsigned long long test = 0;
 	start = mpk_tsc();
-	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t"
+	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t" // caller_token
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movq %%rsp, %0\n\t"
-	                     //"movl $pkru_invstk, %%eax\n\t"
-                         //"wrpkru\n\t"
-	                     "movq $0x0, %%rax\n\t" // tid = 0x0
-						 "movq $s, %%rax\n\t"
-	                     "movq $0x30, %%rcx\n\t"
-						 "lea 0x0(%%rax, %%rcx, 8), %%rdx\n\t"
-	                     "movq %%rdx, %%rax\n\t"
-	                     "movq (%%rdx), %%rcx\n\t"
-						 "movq %%rcx, %1\n\t"
-	                     /*"movq $0x0, %%rax\n\t" // tid = 0x0
+	                   //"movl $pkru_userlevel_kernel, %%eax\n\t"
+                       //"wrpkru\n\t"
+	                     "movq $0x1, %%rax\n\t" // tid = 0x1
 	                     "shl $0x7, %%rax\n\t"
-	                     "add $s, %%rax\n\t"
-						 "movq %%rax, %1\n\t"
-	                     */
-						 /*"shl $0x4, %%rdx\n\t"
-	                     "add %%rdx, %%rax\n\t"
-	                     "add $16, %%rax\n\t"
-	                     "movq %%rsp, (%%rax)\n\t" // save invocation record
-	                     "add $1, (%%rcx)\n\t"*/
-	                     /*"xor %%rcx, %%rcx\n\t"
+	                     "movq $s, %%rcx\n\t"
+	                     "lea 0x0(%%rcx, %%rax, 1), %%rdx\n\t" // get per thread invstk
+	                     "movq (%%rdx), %%rcx\n\t"
+	                     "shl $0x4, %%rcx\n\t"
+	                     "lea 0x10(%%rdx, %%rcx, 1), %%rax\n\t" // get head
+	                     "movq %%rsp, (%%rax)\n\t" // save sp
+	                     "add $0x8, %%rax\n\t"
+	                     "lea (%%rip), %%rcx\n\t"
+	                     "movq %%rcx, (%%rax)\n\t" //save ip
+	                     "add $0x1, (%%rdx)\n\t"
+	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
-	                     "movl $pkru_callee, %%eax\n\t"
-	                     "wrpkru\n\t"
-	                     "cmp $0xfffffffffffffff0, %%r15\n\t"
+	                   //"movl $pkru_callee, %%eax\n\t"
+	                   //"wrpkru\n\t"
+	                     "cmp $0xfffffffffffffff0, %%r15\n\t" // caller_token check
 	                     "jne 1f\n\t"
 	                   //"call caller_func\n\t"
 	                     "jmp 2f\n\t"
-	                     "1:\n\t"						 
+	                     "1:\n\t"
 	                     "call callgate_abuse\n\t"
 	                     "2:\n\t"
-	                     /*"movq $0xfffffffffffffff1, %%r15\n\t"
+	                     "movq $0xfffffffffffffff1, %%r15\n\t" // callee_token
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
-	                     "movl $pkru_invstk, %%eax\n\t"
-						 "wrpkru\n\t"
-	                     "movq $0x0, %%rax\n\t" // tid = 0x0
+	                   //"movl $pkru_userlevel_kernel, %%eax\n\t"
+	                   //"wrpkru\n\t"
+	                     "movq $0x1, %%rax\n\t" // tid = 0x0
 	                     "shl $0x7, %%rax\n\t"
-	                     "add $s, %%rax\n\t"
-	                     "movq %%rax, %%rcx\n\t"
-	                     "movq (%%rax), %%rdx\n\t"
-	                     "shl $0x4, %%rdx\n\t"
-	                     "add $16, %%rax\n\t"
-	                     "movq (%%rax), %%rsp\n\t"
-	                     "sub $1, (%%rax)\n\t"
+	                     "add $s, %%rcx\n\t"
+	                     "lea 0x0(%%rcx, %%rax, 1), %%rdx\n\t"
+	                     //"movq %%rax, %%rcx\n\t"
+	                     "movq (%%rdx), %%rcx\n\t"
+	                     "shl $0x4, %%rcx\n\t"
+	                     "lea 0x10(%%rdx, %%rcx, 1), %%rax\n\t"
+	                    // "movq (%%rax), %%rsp\n\t"
+	                     "add $0x8, %%rax\n\t"
+	                    // "movq (%%rax), %%rip\n\t"
+	                     "sub $1, (%%rdx)\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
-	                     "movl $pkru_caller, %%eax\n\t"
-	                     "wrpkru\n\t"
-	                     "cmp $0xfffffffffffffff1, %%r15\n\t"
+	                   //"movl $pkru_caller, %%eax\n\t"
+	                   //"wrpkru\n\t"
+	                     "cmp $0xfffffffffffffff1, %%r15\n\t" // callee_token check
 	                     "jne 3f\n\t"
 	                   //"call callee_func\n\t"
 	                     "jmp 4f\n\t"
 	                     "3:\n\t"
 	                     "call callgate_abuse\n\t"
-						 "4:"*/
-						 : "=r" (verifier), "=r" (aaa), "=r" (bbb)
-						 :
-						 : "memory", "cc");
+	                     "4:"
+	                     : "=r" (verifier)
+	                     :
+	                     : "memory", "cc");
 	end = mpk_tsc();
-	printf("aaa: 0x%llx, bbb: 0x%llx, s: 0x%llx\n", aaa, bbb, s);
-	printf("verifier: 0x%llx\n", verifier);
 	printf("overhead: %llu\n", end-start);
-	printf("top: %llu\n", s[0].top);
 }
 
 int
@@ -141,7 +134,7 @@ void
 client_call(int *s_buffer)
 {
 	callgate();
-	printf("expr read buffer: %d\n", *s_buffer);
+	//printf("expr read buffer: %d\n", *s_buffer);
 }
 
 int
@@ -149,8 +142,8 @@ main(void)
 {
 	int *s_buffer, *c_buffer;
 
-	pkey[0] = init(&s_buffer);
-	pkey[1] = init(&c_buffer);
+//	pkey[0] = init(&s_buffer);
+//	pkey[1] = init(&c_buffer);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer);
