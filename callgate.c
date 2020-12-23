@@ -51,8 +51,8 @@ callgate()
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movq %%rsp, %0\n\t"
-	                   //"movl $pkru_userlevel_kernel, %%eax\n\t"
-                       //"wrpkru\n\t"
+	                     "movl $pkru_userlevel_kernel, %%eax\n\t"
+                         "wrpkru\n\t"
 	                     "movq $0x1, %%rax\n\t" // tid = 0x1
 	                     "shl $0x7, %%rax\n\t"
 	                     "movq $s, %%rcx\n\t"
@@ -67,8 +67,8 @@ callgate()
 	                     "add $0x1, (%%rdx)\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
-	                   //"movl $pkru_callee, %%eax\n\t"
-	                   //"wrpkru\n\t"
+	                     "movl $pkru_callee, %%eax\n\t"
+	                     "wrpkru\n\t"
 	                     "cmp $0xfffffffffffffff0, %%r15\n\t" // caller_token check
 	                     "jne 1f\n\t"
 	                   //"call caller_func\n\t"
@@ -79,8 +79,8 @@ callgate()
 	                     "movq $0xfffffffffffffff1, %%r15\n\t" // callee_token
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
-	                   //"movl $pkru_userlevel_kernel, %%eax\n\t"
-	                   //"wrpkru\n\t"
+	                     "movl $pkru_userlevel_kernel, %%eax\n\t"
+	                     "wrpkru\n\t"
 	                     "movq $0x1, %%rax\n\t" // tid = 0x0
 	                     "shl $0x7, %%rax\n\t"
 	                     "add $s, %%rcx\n\t"
@@ -95,8 +95,8 @@ callgate()
 	                     "sub $1, (%%rdx)\n\t"
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
-	                   //"movl $pkru_caller, %%eax\n\t"
-	                   //"wrpkru\n\t"
+	                     "movl $pkru_caller, %%eax\n\t"
+	                     "wrpkru\n\t"
 	                     "cmp $0xfffffffffffffff1, %%r15\n\t" // callee_token check
 	                     "jne 3f\n\t"
 	                   //"call callee_func\n\t"
