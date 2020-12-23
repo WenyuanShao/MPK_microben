@@ -140,13 +140,14 @@ int
 main(void)
 {
 	int *s_buffer, *c_buffer;
-	unsigned long pkru = 0;
+	unsigned long pkru = ~(unsigned long)0;
 
 	printf("PKEY_DISABLE_ACCESS:%d\n", PKEY_DISABLE_ACCESS);
 	pkey[0] = init(&s_buffer);
-	pkru = test_rdpkru();
-	printf("pkru: %x, pkey: %d\n", pkru, pkey[0]);
+	//pkru = test_rdpkru();
+	//printf("pkru: %x, pkey: %d\n", pkru, pkey[0]);
 	pkey[1] = init(&c_buffer);
+	wrpkru(pkru);
 	pkru = test_rdpkru();
 	printf("pkru: %x, pkey: %d\n", pkru, pkey[1]);
 	printf("expr read buffer: %d\n", *s_buffer);
