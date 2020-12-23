@@ -140,7 +140,7 @@ int
 main(void)
 {
 	int *s_buffer, *c_buffer;
-	unsigned long pkru = ~(unsigned long)0;
+	unsigned long pkru = 0xfffffffc;
 
 	printf("PKEY_DISABLE_ACCESS:%d\n", PKEY_DISABLE_ACCESS);
 	pkey[0] = init(&s_buffer);
