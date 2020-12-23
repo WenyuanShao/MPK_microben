@@ -153,7 +153,7 @@ main(void)
 	//printf("expr read buffer: %d\n", *s_buffer);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
-	client_call(s_buffer);
+	//client_call(s_buffer);
 
 	return 0;
 }
