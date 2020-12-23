@@ -144,10 +144,10 @@ main(void)
 
 	pkey[0] = init(&s_buffer);
 	pkru = test_rdpkru();
-	printf("pkru: %x\n", pkru);
+	printf("pkru: %x, pkey: %d\n", pkru, pkey[0]);
 	pkey[1] = init(&c_buffer);
 	pkru = test_rdpkru();
-	printf("pkru: %x\n", pkru);
+	printf("pkru: %x, pkey: %d\n", pkru, pkey[1]);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer);
