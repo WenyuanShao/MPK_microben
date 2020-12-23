@@ -46,7 +46,7 @@ callgate()
 	 */
 	unsigned long long end, start;
 	start = mpk_tsc();
-	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t" // caller_token
+	/*__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t" // caller_token
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movq %%rsp, %0\n\t"
@@ -107,7 +107,7 @@ callgate()
 	                     :
 	                     : "memory", "cc");
 	end = mpk_tsc();
-	printf("overhead: %llu\n", end-start);
+	printf("overhead: %llu\n", end-start);*/
 }
 
 int
