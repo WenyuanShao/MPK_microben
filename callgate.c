@@ -102,10 +102,10 @@ callgate()
 	                     "jmp 4f\n\t"
 	                     "3:\n\t"
 	                     "call callgate_abuse\n\t"
-	                     "4:"
+	                     "4:"*/
 	                     : "=r" (verifier)
 	                     :
-	                     : "memory", "cc");*/
+	                     : "memory", "cc");
 	end = mpk_tsc();
 	printf("overhead: %llu\n", end-start);
 }
