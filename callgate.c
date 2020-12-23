@@ -150,7 +150,7 @@ main(void)
 	wrpkru(pkru);
 	pkru = test_rdpkru();
 	printf("pkru: %x, pkey: %d\n", pkru, pkey[1]);
-	printf("expr read buffer: %d\n", *s_buffer);
+	//printf("expr read buffer: %d\n", *s_buffer);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer);
