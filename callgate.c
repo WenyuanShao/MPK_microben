@@ -15,7 +15,7 @@ struct stack {
 
 int pkey[2];
 static unsigned long long token  = ~(unsigned long long)0;
-static unsigned long pkru_invstk = 0;
+static unsigned long pkru_userlevel_kernel = 0;
 static unsigned long pkru_callee = 0;
 static unsigned long pkru_caller = 0;
 static unsigned long long tid    = 0;
