@@ -73,10 +73,6 @@ callgate()
 	                     "cmp $0xfffffffffffffff0, %%r15\n\t" // caller_token check
 	                     "jne 1f\n\t"
 	                   //"call caller_func\n\t"
-	                   //"jmp 2f\n\t"
-	                   //"1:\n\t"
-	                   //"call callgate_abuse\n\t"
-	                   //"2:\n\t"
 	                     "movq $0xfffffffffffffff1, %%r15\n\t" // callee_token
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
