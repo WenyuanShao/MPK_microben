@@ -141,16 +141,13 @@ main(void)
 {
 	int *s_buffer, *c_buffer;
 	unsigned long pkru = 0;
-	char r[32];
 
 	pkey[0] = init(&s_buffer);
 	pkru = test_rdpkru();
-	itoa(pkru, r, 2);
-	printf("pkru: %s\n", pkru);
+	printf("pkru: %x\n", pkru);
 	pkey[1] = init(&c_buffer);
 	pkru = test_rdpkru();
-	itoa(pkru, r, 2);
-	printf("pkru: %s\n", pkru);
+	printf("pkru: %x\n", pkru);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
 	client_call(s_buffer);
