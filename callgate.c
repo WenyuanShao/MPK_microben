@@ -110,7 +110,7 @@ callgate()
 	                     : "memory", "cc");
 	}
 	end = mpk_tsc();
-	printf("overhead: %llu\n", end-start);
+	printf("overhead: %llu\n", (end-start)/100);
 }
 
 int
