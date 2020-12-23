@@ -148,7 +148,7 @@ main(void)
 	//printf("pkru: %x, pkey: %d\n", pkru, pkey[0]);
 	pkey[1] = init(&c_buffer);
 	wrpkru(pkru);
-	pkru = test_rdpkru();
+	//pkru = test_rdpkru();
 	//printf("pkru: %x, pkey: %d\n", pkru, pkey[1]);
 	//printf("expr read buffer: %d\n", *s_buffer);
 
