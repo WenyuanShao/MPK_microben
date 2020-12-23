@@ -75,7 +75,7 @@ callgate()
 	                     "1:\n\t"
 	                     "call callgate_abuse\n\t"
 	                     "2:\n\t"
-	                     /*"movq $0xfffffffffffffff1, %%r15\n\t" // callee_token
+	                     "movq $0xfffffffffffffff1, %%r15\n\t" // callee_token
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
 	                     "movl $pkru_userlevel_kernel, %%eax\n\t"
@@ -102,7 +102,7 @@ callgate()
 	                     "jmp 4f\n\t"
 	                     "3:\n\t"
 	                     "call callgate_abuse\n\t"
-	                     "4:"*/
+	                     "4:"
 	                     : "=r" (verifier)
 	                     :
 	                     : "memory", "cc");
@@ -130,10 +130,10 @@ init(int **buffer) {
 }
 
 void
-client_call(int *s_buffer)
+client_call(int *s_buffer, int *c_buffer)
 {
 	callgate();
-	printf("expr read buffer: %d\n", *s_buffer);
+	printf("expr read buffer: %d\n", *c_buffer);
 }
 
 int
@@ -153,7 +153,7 @@ main(void)
 	//printf("expr read buffer: %d\n", *s_buffer);
 
 	//_pkey_set(pkey[0], PKEY_DISABLE_ACCESS, 0);
-	client_call(s_buffer);
+	client_call(s_buffer, c_buffer);
 
 	return 0;
 }
