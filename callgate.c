@@ -45,7 +45,9 @@ callgate()
 	 * a thread. As a result, in this prototype, I don't consider it.
 	 */
 	unsigned long long end, start;
+	int i = 0;
 	start = mpk_tsc();
+	for (i = 0; i < 100; i++) {
 	__asm__ __volatile__("movq $0xfffffffffffffff0, %%r15\n\t" // caller_token
 	                     "xor %%rcx, %%rcx\n\t"
 	                     "xor %%rdx, %%rdx\n\t"
@@ -106,6 +108,7 @@ callgate()
 	                     : "=r" (verifier)
 	                     :
 	                     : "memory", "cc");
+	}
 	end = mpk_tsc();
 	printf("overhead: %llu\n", end-start);
 }
@@ -133,7 +136,7 @@ void
 client_call(int *s_buffer, int *c_buffer)
 {
 	callgate();
-	printf("expr read buffer: %d\n", *c_buffer);
+	//printf("expr read buffer: %d\n", *c_buffer);
 }
 
 int
